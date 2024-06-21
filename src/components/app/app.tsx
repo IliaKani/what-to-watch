@@ -1,7 +1,8 @@
 import Main from '../../pages/main/main';
-import {FileCardProps} from '../file-card/file-card';
+import {films} from '../../mocks/films';
+import {FilmCardProps} from '../film-card/film-card';
 
-const mockProps: FileCardProps = {
+const filmCardMock: FilmCardProps = {
   title: 'The Grand Budapest Hotel',
   genre: 'Drama',
   year: '2014',
@@ -10,7 +11,7 @@ const mockProps: FileCardProps = {
 };
 
 function App(): JSX.Element {
-  return <Main {...mockProps}/>;
+  return <Main films={films} filmCardProps={filmCardMock} />;
 }
 
 export default App;
