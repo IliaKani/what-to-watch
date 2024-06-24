@@ -1,0 +1,8 @@
+.page-not-found.container {
+  padding: 30px;
+}
+
+.page-not-found.container > a {
+  color: black;
+}
+
