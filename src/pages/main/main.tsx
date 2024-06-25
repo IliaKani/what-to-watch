@@ -1,16 +1,14 @@
-import { useId } from 'react';
 import FilmCard, {FilmCardProps} from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
-import {SmallFilmCardType} from '../../types/small-film-card-type';
 import SmallFilmCard from '../../components/small-film-card/small-film-card';
+import {Film} from '../../types/film';
 
 type MainProps = {
-  films: SmallFilmCardType[];
+  films: Film[];
   filmCardProps: FilmCardProps;
 }
 
 export default function Main({films, filmCardProps}: MainProps) {
-  const id = useId();
   return (
     <>
       <FilmCard {...filmCardProps}/>
@@ -51,7 +49,7 @@ export default function Main({films, filmCardProps}: MainProps) {
           </ul>
           <div className="catalog__films-list">
             {films.map((film, idx) =>
-              <SmallFilmCard key={id} {...film} />
+              <SmallFilmCard key={film.id} name={film.name} previewImage={film.previewImage} />
             )}
           </div>
           <div className="catalog__more">

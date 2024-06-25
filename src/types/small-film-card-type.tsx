@@ -1,4 +1,4 @@
 export type SmallFilmCardType = {
-  title: string;
-  picture: string;
+  name: string;
+  previewImage: string;
 }
