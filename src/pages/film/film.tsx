@@ -1,21 +1,51 @@
-import { useId } from 'react';
+import {useParams} from 'react-router-dom';
 import Footer from '../../components/footer/footer';
-import {SmallFilmCardType} from '../../types/small-film-card-type';
-import SmallFilmCard from '../../components/small-film-card/small-film-card';
 import Header from '../../components/header/header';
+import {Film as FilmType} from '../../types/film';
+import PageNotFound from '../page-not-found/page-not-found';
+import ButtonsList from '../../components/buttons-list/buttons-list';
+import FilmList from '../../components/film-list/film-list';
 
 type FilmProps = {
-  films: SmallFilmCardType[];
+  films: FilmType[];
 }
 
 export default function Film({films}: FilmProps) {
-  const id = useId();
+  const {id} = useParams();
+
+  const currentFilm: FilmType | undefined = films.find((film : FilmType) => film.id === Number(id));
+
+  if (!currentFilm) {
+    return (
+      <PageNotFound />
+    );
+  }
+
+  const {
+    name,
+    posterImage,
+    previewImage,
+    // backgroundImage,
+    // backgroundColor,
+    description,
+    rating,
+    // scoresCount,
+    director,
+    starring,
+    // runTime,
+    genre,
+    released,
+    // isFavorite,
+    // videoLink,
+    // previewVideoLink,
+  } = currentFilm;
+
   return (
     <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+            <img src={previewImage} alt={name}/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -24,27 +54,12 @@ export default function Film({films}: FilmProps) {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">2014</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{released}</span>
               </p>
-
-              <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
-                <a href="add-review.html" className="btn film-card__button">Add review</a>
-              </div>
+              <ButtonsList id={Number(id)}/>
             </div>
           </div>
         </div>
@@ -52,7 +67,7 @@ export default function Film({films}: FilmProps) {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218"
+              <img src={posterImage} alt="The Grand Budapest Hotel poster" width="218"
                 height="327"
               />
             </div>
@@ -73,7 +88,7 @@ export default function Film({films}: FilmProps) {
               </nav>
 
               <div className="film-rating">
-                <div className="film-rating__score">8,9</div>
+                <div className="film-rating__score">{rating}</div>
                 <p className="film-rating__meta">
                   <span className="film-rating__level">Very good</span>
                   <span className="film-rating__count">240 ratings</span>
@@ -81,20 +96,11 @@ export default function Film({films}: FilmProps) {
               </div>
 
               <div className="film-card__text">
-                <p>In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge
-                  Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustaves friend and protege.
-                </p>
-
-                <p>Gustave prides himself on providing first-class service to the hotels guests, including satisfying
-                  the sexual needs of the many elderly women who stay there. When one of Gustaves lovers dies
-                  mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her
-                  murder.
-                </p>
-
-                <p className="film-card__director"><strong>Director: Wes Anderson</strong></p>
+                <p>{description}</p>
+                <p className="film-card__director"><strong>Director: {director}</strong></p>
 
                 <p className="film-card__starring">
-                  <strong>Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe and other </strong>
+                  <strong>Starring: {starring.join(',')}</strong>
                 </p>
               </div>
             </div>
@@ -105,12 +111,7 @@ export default function Film({films}: FilmProps) {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-
-          <div className="catalog__films-list">
-            {films.map((film, idx) =>
-              <SmallFilmCard key={id} {...film} />
-            )}
-          </div>
+          <FilmList films={films} />
         </section>
         <Footer/>
       </div>

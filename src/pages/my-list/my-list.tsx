@@ -1,14 +1,12 @@
-import { useId } from 'react';
 import Footer from '../../components/footer/footer';
-import {SmallFilmCardType} from '../../types/small-film-card-type';
-import SmallFilmCard from '../../components/small-film-card/small-film-card';
+import FilmList from '../../components/film-list/film-list';
+import {Film} from '../../types/film';
 
 type MyListProps = {
-  films: SmallFilmCardType[];
+  films: Film[];
 }
 
 export default function MyList({films}: MyListProps) {
-  const id = useId();
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -33,11 +31,7 @@ export default function MyList({films}: MyListProps) {
       </header>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <div className="catalog__films-list">
-          {films.map((film, idx) =>
-            <SmallFilmCard key={id} {...film} />
-          )}
-        </div>
+        <FilmList films={films} />
       </section>
       <Footer/>
     </div>

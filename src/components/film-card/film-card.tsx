@@ -1,6 +1,9 @@
 import Header from '../header/header';
+import ButtonsList from '../buttons-list/buttons-list';
+import {ButtonsType} from '../../const';
 
 export type FilmCardProps = {
+  id: number;
   title: string;
   genre: string;
   year: string;
@@ -8,7 +11,7 @@ export type FilmCardProps = {
   pictureUrl: string;
 }
 
-export default function FilmCard({title, genre, year, posterUrl, pictureUrl}: FilmCardProps) {
+export default function FilmCard({id, title, genre, year, posterUrl, pictureUrl}: FilmCardProps) {
   return (
     <section className="film-card">
       <div className="film-card__bg">
@@ -27,20 +30,7 @@ export default function FilmCard({title, genre, year, posterUrl, pictureUrl}: Fi
               <span className="film-card__genre">{genre}</span>
               <span className="film-card__year">{year}</span>
             </p>
-            <div className="film-card__buttons">
-              <button className="btn btn--play film-card__button" type="button">
-                <svg viewBox="0 0 19 19" width={19} height={19}>
-                  <use xlinkHref="#play-s" />
-                </svg>
-                <span>Play</span>
-              </button>
-              <button className="btn btn--list film-card__button" type="button">
-                <svg viewBox="0 0 19 20" width={19} height={20}>
-                  <use xlinkHref="#add" />
-                </svg>
-                <span>My list</span>
-              </button>
-            </div>
+            <ButtonsList id={id} hideButton={ButtonsType.AddReview}/>
           </div>
         </div>
       </div>

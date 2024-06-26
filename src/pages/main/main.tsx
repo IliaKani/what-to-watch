@@ -1,7 +1,7 @@
 import FilmCard, {FilmCardProps} from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
-import SmallFilmCard from '../../components/small-film-card/small-film-card';
 import {Film} from '../../types/film';
+import FilmList from '../../components/film-list/film-list';
 
 type MainProps = {
   films: Film[];
@@ -47,11 +47,7 @@ export default function Main({films, filmCardProps}: MainProps) {
               <a href="#" className="catalog__genres-link">Thrillers</a>
             </li>
           </ul>
-          <div className="catalog__films-list">
-            {films.map((film, idx) =>
-              <SmallFilmCard key={film.id} name={film.name} previewImage={film.previewImage} />
-            )}
-          </div>
+          <FilmList films={films} />
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
           </div>
