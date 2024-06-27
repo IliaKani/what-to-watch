@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {Film} from '../../types/film';
 import SmallFilmCard from '../small-film-card/small-film-card';
+import {PREVIEW_TIMEOUT} from '../../const';
 
 type FilmListProps = {
   films: Film[];
@@ -8,16 +9,21 @@ type FilmListProps = {
 
 export default function FilmList({films}: FilmListProps) {
   const [activeFilm, setActiveFilm] = useState<number | null>(null);
+  const [isPlayingFilm, setIsPlayingFilm] = useState<boolean>(false);
+  let timer: ReturnType<typeof setTimeout>;
+
   const onMouseEnterHandler = (id: number) => {
     setActiveFilm(id);
+    timer = setTimeout(() => {
+      setIsPlayingFilm(true);
+    }, PREVIEW_TIMEOUT);
   };
 
   const onMouseLeaveHandler = () => {
     setActiveFilm(null);
+    clearTimeout(timer);
+    setIsPlayingFilm(false);
   };
-
-  /* eslint-disable */
-  console.log('active_film', activeFilm);
 
   return(
     <div className="catalog__films-list">
@@ -25,9 +31,8 @@ export default function FilmList({films}: FilmListProps) {
         (
           <SmallFilmCard
             key={film.id}
-            id={film.id}
-            name={film.name}
-            previewImage={film.previewImage}
+            {...film}
+            isPlaying={activeFilm === film.id && isPlayingFilm}
             onMouseEnter={onMouseEnterHandler}
             onMouseLeave={onMouseLeaveHandler}
           />

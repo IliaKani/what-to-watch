@@ -1,4 +1,4 @@
-import VideoPlayer from '../../components/video-player/video-player';
+import VideoPlayer from '../../components/player/player';
 import {useParams} from 'react-router-dom';
 import {Film as FilmType} from '../../types/film';
 import PageNotFound from '../page-not-found/page-not-found';

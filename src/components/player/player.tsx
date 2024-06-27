@@ -2,7 +2,7 @@ import {Film} from '../../types/film';
 import {useNavigate} from 'react-router-dom';
 
 
-export default function VideoPlayer({videoLink, posterImage, runTime, name}: Film) {
+export default function Player({videoLink, posterImage, runTime, name}: Film) {
   const navigate = useNavigate();
   const onClickHandler = () => {
     navigate(-1);

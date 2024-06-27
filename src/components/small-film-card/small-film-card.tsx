@@ -2,8 +2,9 @@ import {MouseEvent} from 'react';
 import {AppRoute} from '../../const';
 import {useNavigate} from 'react-router-dom';
 import {SmallFilmCardType} from '../../types/small-film-card-type';
+import ComponentPlayer from '../component-player/component-player';
 
-export default function SmallFilmCard({name, previewImage, id, onMouseEnter, onMouseLeave}: SmallFilmCardType) {
+export default function SmallFilmCard({name, isPlaying, previewImage, posterImage, previewVideoLink, id, onMouseEnter, onMouseLeave}: SmallFilmCardType) {
   const navigate = useNavigate();
 
   const onClickHandler = (e: MouseEvent<HTMLHeadingElement> | MouseEvent<HTMLAnchorElement>) => {
@@ -29,7 +30,21 @@ export default function SmallFilmCard({name, previewImage, id, onMouseEnter, onM
       onMouseLeave={handleMouseLeave}
     >
       <div className="small-film-card__image" onClick={onClickHandler}>
-        <img src={previewImage} alt={name} width={280} height={175} />
+        {
+          isPlaying ?
+            <ComponentPlayer
+              key={id}
+              isPlaying={isPlaying}
+              previewVideoLink={previewVideoLink}
+              posterImage={posterImage}
+            /> :
+            <img
+              src={previewImage}
+              alt={name}
+              width={280}
+              height={175}
+            />
+        }
       </div>
       <h3 className="small-film-card__title" onClick={onClickHandler}>
         <a className="small-film-card__link" href="film-page.html">{name}</a>
