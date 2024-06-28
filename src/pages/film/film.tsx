@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
@@ -5,6 +6,9 @@ import {Film as FilmType} from '../../types/film';
 import PageNotFound from '../page-not-found/page-not-found';
 import ButtonsList from '../../components/buttons-list/buttons-list';
 import FilmList from '../../components/film-list/film-list';
+import Tabs from '../../components/tabs/tabs';
+import {TABS} from '../../const';
+import ChooseSection from '../../components/choose-section/choose-section';
 
 type FilmProps = {
   films: FilmType[];
@@ -12,6 +16,11 @@ type FilmProps = {
 
 export default function Film({films}: FilmProps) {
   const {id} = useParams();
+  const [activeTab, setActiveTab] = useState<string>(TABS[0]);
+
+  const handleTabClick = (value: string) => {
+    setActiveTab(value);
+  };
 
   const currentFilm: FilmType | undefined = films.find((film : FilmType) => film.id === Number(id));
 
@@ -26,12 +35,12 @@ export default function Film({films}: FilmProps) {
     posterImage,
     previewImage,
     // backgroundImage,
-    // backgroundColor,
-    description,
-    rating,
+    backgroundColor,
+    // description,
+    // rating,
     // scoresCount,
-    director,
-    starring,
+    // director,
+    // starring,
     // runTime,
     genre,
     released,
@@ -40,9 +49,14 @@ export default function Film({films}: FilmProps) {
     // previewVideoLink,
   } = currentFilm;
 
+  const filmStyle = {
+    backgroundColor,
+  };
+
+
   return (
     <>
-      <section className="film-card film-card--full">
+      <section className="film-card film-card--full" style={filmStyle}>
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img src={previewImage} alt={name}/>
@@ -73,36 +87,9 @@ export default function Film({films}: FilmProps) {
             </div>
 
             <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">Overview</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Details</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
+              <Tabs activeTab={activeTab} onClick={handleTabClick}/>
 
-              <div className="film-rating">
-                <div className="film-rating__score">{rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{description}</p>
-                <p className="film-card__director"><strong>Director: {director}</strong></p>
-
-                <p className="film-card__starring">
-                  <strong>Starring: {starring.join(',')}</strong>
-                </p>
-              </div>
+              <ChooseSection film={currentFilm} activeSection={activeTab} />
             </div>
           </div>
         </div>

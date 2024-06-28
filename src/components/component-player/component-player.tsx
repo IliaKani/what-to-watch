@@ -1,4 +1,4 @@
-import {useRef, useEffect} from 'react';
+import {useRef} from 'react';
 
 type DemoPlayerProps = {
   isPlaying: boolean;
@@ -8,13 +8,13 @@ type DemoPlayerProps = {
 
 export default function ComponentPlayer({isPlaying, previewVideoLink, posterImage}: DemoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null!);
-
-  useEffect(() => {
-    if (!isPlaying) {
-      return;
-    }
-    videoRef.current && videoRef.current.play();
-  }, []);
+  //
+  // useEffect(() => {
+  //   if (!isPlaying) {
+  //     return;
+  //   }
+  //   videoRef.current && videoRef.current !== null && videoRef?.current?.play();
+  // }, []);
 
   return (
     <video
@@ -23,6 +23,7 @@ export default function ComponentPlayer({isPlaying, previewVideoLink, posterImag
       className="videoPlayer"
       src={previewVideoLink}
       poster={posterImage}
+      autoPlay
       muted
       ref={videoRef}
     />
