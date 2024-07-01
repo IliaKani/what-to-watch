@@ -30,23 +30,15 @@ export default function Film({films}: FilmProps) {
     );
   }
 
+  const filteredFilms = [...films].filter((film) => film.genre === currentFilm.genre && film.id !== currentFilm.id).splice(0,4);
+
   const {
     name,
     posterImage,
     previewImage,
-    // backgroundImage,
     backgroundColor,
-    // description,
-    // rating,
-    // scoresCount,
-    // director,
-    // starring,
-    // runTime,
     genre,
     released,
-    // isFavorite,
-    // videoLink,
-    // previewVideoLink,
   } = currentFilm;
 
   const filmStyle = {
@@ -98,7 +90,7 @@ export default function Film({films}: FilmProps) {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmList films={films} />
+          <FilmList films={filteredFilms} />
         </section>
         <Footer/>
       </div>

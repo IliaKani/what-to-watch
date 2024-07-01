@@ -26,3 +26,12 @@ export const PREVIEW_TIMEOUT = 1000;
 
 export const RATINGS = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 export const DEFAULT_CHECKED_INDEX = 4;
+export const TABS = ['Overview', 'Details', 'Reviews'];
+
+export enum RatingStatus {
+  Bad = 'Bad',
+  Normal = 'Normal',
+  Good = 'Good',
+  VeryGood = 'Very good',
+  Awesome = 'Awesome',
+}

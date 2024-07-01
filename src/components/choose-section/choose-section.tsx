@@ -15,7 +15,7 @@ const renderSwitch = (film: Film, prop: string) => {
     case 'Details':
       return <Details {...film}/>;
     case 'Reviews':
-      return <Reviews {...film}/>;
+      return <Reviews/>;
     default:
       return <Overview {...film}/>;
   }

@@ -8,7 +8,7 @@ export default function Overview({director, starring, rating, description, score
         <div className="film-rating__score">{rating}</div>
         <p className="film-rating__meta">
           <span className="film-rating__level">{checkRating(rating)}</span>
-          <span className="film-rating__count">{scoresCount}</span>
+          <span className="film-rating__count">{scoresCount} ratings</span>
         </p>
       </div>
       <div className="film-card__text">
