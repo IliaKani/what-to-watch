@@ -17,7 +17,7 @@ export const films: Film[] = [
       'Elizabeth McGovern'
     ],
     runTime: 229,
-    genre: 'Crime',
+    genre: 'Horror',
     released: 1984,
     id: 1,
     isFavorite: false,
@@ -40,7 +40,7 @@ export const films: Film[] = [
       'Jason Schwartzman'
     ],
     runTime: 91,
-    genre: 'Adventure',
+    genre: 'Horror',
     released: 2007,
     id: 2,
     isFavorite: false,

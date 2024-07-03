@@ -1,20 +1,20 @@
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
+// components
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import {Film as FilmType} from '../../types/film';
-import PageNotFound from '../page-not-found/page-not-found';
 import ButtonsList from '../../components/buttons-list/buttons-list';
 import FilmList from '../../components/film-list/film-list';
 import Tabs from '../../components/tabs/tabs';
-import {TABS} from '../../const';
 import ChooseSection from '../../components/choose-section/choose-section';
+// pages
+import PageNotFound from '../page-not-found/page-not-found';
+// const
+import {TABS} from '../../const';
+// hooks
+import {useAppSelector} from '../../hooks';
 
-type FilmProps = {
-  films: FilmType[];
-}
-
-export default function Film({films}: FilmProps) {
+export default function Film() {
   const {id} = useParams();
   const [activeTab, setActiveTab] = useState<string>(TABS[0]);
 
@@ -22,7 +22,11 @@ export default function Film({films}: FilmProps) {
     setActiveTab(value);
   };
 
-  const currentFilm: FilmType | undefined = films.find((film : FilmType) => film.id === Number(id));
+  const currentFilm = useAppSelector((state) => state.films.find((film) => (
+    film.id === Number(id))
+  ));
+
+  const films = useAppSelector((state) => state.films);
 
   if (!currentFilm) {
     return (
@@ -30,7 +34,7 @@ export default function Film({films}: FilmProps) {
     );
   }
 
-  const filteredFilms = [...films].filter((film) => film.genre === currentFilm.genre && film.id !== currentFilm.id).splice(0,4);
+  const filteredFilms = films.filter((film) => film.genre === currentFilm.genre && film.id !== currentFilm.id).splice(0,4);
 
   const {
     name,
@@ -44,7 +48,6 @@ export default function Film({films}: FilmProps) {
   const filmStyle = {
     backgroundColor,
   };
-
 
   return (
     <>
@@ -80,7 +83,6 @@ export default function Film({films}: FilmProps) {
 
             <div className="film-card__desc">
               <Tabs activeTab={activeTab} onClick={handleTabClick}/>
-
               <ChooseSection film={currentFilm} activeSection={activeTab} />
             </div>
           </div>

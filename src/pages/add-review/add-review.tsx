@@ -1,16 +1,17 @@
 import {useParams} from 'react-router-dom';
+// components
 import Header from '../../components/header/header';
 import ReviewForm from '../../components/review-form/review-form';
+// pages
 import PageNotFound from '../page-not-found/page-not-found';
-import {Film as FilmType} from '../../types/film';
+// hooks
+import {useAppSelector} from '../../hooks';
 
-type AddReviewProps = {
-  films: FilmType[];
-}
-
-export default function AddReview({films}: AddReviewProps) {
+export default function AddReview() {
   const {id} = useParams();
-  const currentFilm: FilmType | undefined = films.find((film : FilmType) => film.id === Number(id));
+  const currentFilm = useAppSelector((state) => state.films.find((film) => (
+    film.id === Number(id))
+  ));
 
   if (!currentFilm) {
     return (

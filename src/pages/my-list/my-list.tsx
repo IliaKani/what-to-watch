@@ -1,12 +1,16 @@
+// components
 import Footer from '../../components/footer/footer';
 import FilmList from '../../components/film-list/film-list';
-import {Film} from '../../types/film';
+// hooks
+import {useAppSelector} from '../../hooks';
+// const
+import {Genres} from '../../const';
 
-type MyListProps = {
-  films: Film[];
-}
+export default function MyList() {
+  const films = useAppSelector((state) => state.films.filter((film) => (
+    state.activeGenre === Genres.AllGenres ? film : film.genre === state.activeGenre)
+  ));
 
-export default function MyList({films}: MyListProps) {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">

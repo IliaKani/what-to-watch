@@ -35,3 +35,16 @@ export enum RatingStatus {
   VeryGood = 'Very good',
   Awesome = 'Awesome',
 }
+
+export enum Genres {
+  Comedies = 'Comedies',
+  Crime = 'Crime',
+  Documentary = 'Documentary',
+  Drama = 'Drama',
+  Horror = 'Horror',
+  KidsAndFamily = 'Kids & Family',
+  Romance = 'Romance',
+  SciFi = 'Sci-Fi',
+  Thrillers = 'Thrillers',
+  AllGenres = 'All genres',
+}

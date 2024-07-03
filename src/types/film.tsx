@@ -1,4 +1,4 @@
-type GenreType = 'Fantasy' | 'Action' | 'Adventure' | 'Comedy' | 'Crime' | 'Documentary' | 'Drama' | 'Horror' | 'Kids&Family' | 'Romance' | 'Sci-Fi' | 'Thriller';
+type GenreType = 'All genres' | 'Fantasy' | 'Action' | 'Adventure' | 'Comedy' | 'Crime' | 'Documentary' | 'Drama' | 'Horror' | 'Kids&Family' | 'Romance' | 'Sci-Fi' | 'Thriller';
 
 export type Film = {
   name: string;

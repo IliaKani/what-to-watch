@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import {AppRoute, AuthorizationStatus} from '../../const';
-
+// pages
 import Main from '../../pages/main/main';
 import Player from '../../pages/player/player';
 import Film from '../../pages/film/film';
@@ -10,9 +9,12 @@ import PageNotFound from '../../pages/page-not-found/page-not-found';
 import Login from '../../pages/login/login';
 import MyList from '../../pages/my-list/my-list';
 
+// components
 import {FilmCardProps} from '../film-card/film-card';
 import PrivateRoute from '../private-route/private-route';
-import {films} from '../../mocks/films';
+
+// const
+import {AppRoute, AuthorizationStatus} from '../../const';
 
 const filmCardMock: FilmCardProps = {
   id: 1,
@@ -29,7 +31,7 @@ export default function App() {
       <Routes>
         <Route
           index
-          element={<Main films={films} filmCardProps={filmCardMock} />}
+          element={<Main filmCardProps={filmCardMock} />}
         />
         <Route
           path={AppRoute.Login}
@@ -41,17 +43,17 @@ export default function App() {
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <MyList films={films} />
+              <MyList />
             </PrivateRoute>
           }
         />
         <Route
           path={`${AppRoute.Player}/:id`}
-          element={<Player films={films}/>}
+          element={<Player />}
         />
         <Route
           path={`${AppRoute.Film}/:id`}
-          element={<Film films={films} />}
+          element={<Film />}
         />
         <Route
           path={`${AppRoute.Film}/:id${AppRoute.Review}`}
@@ -59,7 +61,7 @@ export default function App() {
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <AddReview films={films}/>
+              <AddReview />
             </PrivateRoute>
           }
         />

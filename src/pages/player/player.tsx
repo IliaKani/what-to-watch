@@ -1,16 +1,17 @@
-import VideoPlayer from '../../components/player/player';
 import {useParams} from 'react-router-dom';
-import {Film as FilmType} from '../../types/film';
+// components
+import VideoPlayer from '../../components/player/player';
+// pages
 import PageNotFound from '../page-not-found/page-not-found';
+// hooks
+import {useAppSelector} from '../../hooks';
 
-type PlayerProps = {
-  films: FilmType[];
-}
-
-export default function Player({films}: PlayerProps) {
+export default function Player() {
   const {id} = useParams();
 
-  const currentFilm: FilmType | undefined = films.find((film : FilmType) => film.id === Number(id));
+  const currentFilm = useAppSelector((state) => state.films.find((film) => (
+    film.id === Number(id))
+  ));
 
   if (!currentFilm) {
     return (
