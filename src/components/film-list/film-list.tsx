@@ -1,9 +1,9 @@
 import {useState} from 'react';
-import {Film} from '../../types/film';
-import SmallFilmCard from '../small-film-card/small-film-card';
 import {useAppSelector} from '../../hooks';
+import {Film} from '../../types/film';
+import Spinner from '../spinner/spinner';
+import SmallFilmCard from '../small-film-card/small-film-card';
 import {PREVIEW_TIMEOUT} from '../../const';
-import {Genres} from '../../const';
 
 type FilmListProps = {
   films: Film[];
@@ -12,8 +12,8 @@ type FilmListProps = {
 export default function FilmList({films}: FilmListProps) {
   const [activeFilm, setActiveFilm] = useState<number | null>(null);
   const [isPlayingFilm, setIsPlayingFilm] = useState<boolean>(false);
-  const activeGenre = useAppSelector((state) => state.activeGenre);
   let timer: ReturnType<typeof setTimeout>;
+  const isFilmsLoading = useAppSelector((state) => state.isFilmsLoading);
 
   const onMouseEnterHandler = (id: number) => {
     setActiveFilm(id);
@@ -28,27 +28,24 @@ export default function FilmList({films}: FilmListProps) {
     setIsPlayingFilm(false);
   };
 
+
+  if (isFilmsLoading) {
+    return <Spinner />;
+  }
+
   return(
-    <>
-      <div className="catalog__films-list">
-        {films.map((film, idx) =>
-          (
-            <SmallFilmCard
-              key={film.id}
-              {...film}
-              isPlaying={activeFilm === film.id && isPlayingFilm}
-              onMouseEnter={onMouseEnterHandler}
-              onMouseLeave={onMouseLeaveHandler}
-            />
-          )
-        )}
-      </div>
-      {
-        activeGenre === Genres.AllGenres &&
-        <div className="catalog__more">
-          <button className="catalog__button" type="button">Show more</button>
-        </div>
-      }
-    </>
+    <div className="catalog__films-list">
+      {films.map((film, idx) =>
+        (
+          <SmallFilmCard
+            key={film.id}
+            {...film}
+            isPlaying={activeFilm === film.id && isPlayingFilm}
+            onMouseEnter={onMouseEnterHandler}
+            onMouseLeave={onMouseLeaveHandler}
+          />
+        )
+      )}
+    </div>
   );
 }

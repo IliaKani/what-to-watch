@@ -3,13 +3,17 @@ import {AppRoute} from '../../const';
 import {useNavigate} from 'react-router-dom';
 import {SmallFilmCardType} from '../../types/small-film-card-type';
 import ComponentPlayer from '../component-player/component-player';
+import {useAppDispatch} from '../../hooks';
+import {resetCounter} from '../../store/action';
 
 export default function SmallFilmCard({name, isPlaying, previewImage, posterImage, previewVideoLink, id, onMouseEnter, onMouseLeave}: SmallFilmCardType) {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const onClickHandler = (e: MouseEvent<HTMLHeadingElement> | MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     navigate(`${AppRoute.Film}/${id}`);
+    dispatch(resetCounter());
     if (window) {
       window.scrollTo({top: 0, left: 0});
     }

@@ -1,5 +1,6 @@
 import {Film} from '../../types/film';
 import {useNavigate} from 'react-router-dom';
+import {FullScreen, Play} from '../icons/icons';
 
 
 export default function Player({videoLink, posterImage, runTime, name}: Film) {
@@ -21,16 +22,12 @@ export default function Player({videoLink, posterImage, runTime, name}: Film) {
         </div>
         <div className="player__controls-row">
           <button type="button" className="player__play">
-            <svg viewBox="0 0 19 19" width={19} height={19}>
-              <use xlinkHref="#play-s"/>
-            </svg>
+            <Play/>
             <span>Play</span>
           </button>
           <div className="player__name">{name}</div>
           <button type="button" className="player__full-screen">
-            <svg viewBox="0 0 27 27" width={27} height={27}>
-              <use xlinkHref="#full-screen"/>
-            </svg>
+            <FullScreen/>
             <span>Full screen</span>
           </button>
         </div>

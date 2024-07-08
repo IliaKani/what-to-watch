@@ -1,5 +1,5 @@
 import {useAppSelector, useAppDispatch} from '../../hooks';
-import {setGenre} from '../../store/action';
+import {setGenre, resetCounter} from '../../store/action';
 import {Genres} from '../../const';
 import Genre from '../genre/genre';
 
@@ -9,6 +9,7 @@ export default function GenreList() {
 
   const handleClick = (name: string) => {
     dispatch(setGenre(name));
+    dispatch(resetCounter());
   };
 
   return (
