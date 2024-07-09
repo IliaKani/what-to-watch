@@ -18,7 +18,7 @@ export default function FilmCard({id, title, genre, year, posterUrl, pictureUrl}
         <img src={`img/${pictureUrl}`} alt={title} />
       </div>
       <h1 className="visually-hidden">WTW</h1>
-      <Header/>
+      <Header extraClass="film-card__head"/>
       <div className="film-card__wrap">
         <div className="film-card__info">
           <div className="film-card__poster">

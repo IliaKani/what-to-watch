@@ -14,7 +14,7 @@ import {FilmCardProps} from '../film-card/film-card';
 import PrivateRoute from '../private-route/private-route';
 
 // const
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../const';
 
 const filmCardMock: FilmCardProps = {
   id: 1,
@@ -40,9 +40,7 @@ export default function App() {
         <Route
           path={AppRoute.MyList}
           element={
-            <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
-            >
+            <PrivateRoute>
               <MyList />
             </PrivateRoute>
           }
@@ -58,9 +56,7 @@ export default function App() {
         <Route
           path={`${AppRoute.Film}/:id${AppRoute.Review}`}
           element={
-            <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
-            >
+            <PrivateRoute>
               <AddReview />
             </PrivateRoute>
           }
