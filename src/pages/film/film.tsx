@@ -59,7 +59,7 @@ export default function Film() {
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <Header/>
+          <Header extraClass="film-card__head" />
 
           <div className="film-card__wrap">
             <div className="film-card__desc">

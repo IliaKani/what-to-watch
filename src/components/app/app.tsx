@@ -35,7 +35,11 @@ export default function App() {
         />
         <Route
           path={AppRoute.Login}
-          element={<Login />}
+          element={
+            <PrivateRoute onlyUnAuth>
+              <Login/>
+            </PrivateRoute>
+          }
         />
         <Route
           path={AppRoute.MyList}
