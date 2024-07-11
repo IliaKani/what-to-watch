@@ -9,6 +9,7 @@ import {saveToken, dropToken} from '../services/token';
 export const Action = {
   SET_GENRE: 'genre/set',
   FETCH_FILMS: 'films/fetch',
+  FETCH_FILM: 'film/fetch',
   INCREASE_COUNTER: 'counter/increase',
   RESET_COUNTER: 'counter/reset',
   FETCH_USER_STATUS: 'user/fetch-status',
@@ -49,5 +50,13 @@ export const logoutUser = createAsyncThunk<void, void, { extra: AxiosInstance }>
   async (_, { extra: api }) => {
     await api.delete(AppRoute.Logout);
     dropToken();
+  });
+
+export const fetchFilm = createAsyncThunk<Film, Film['id'], { extra: AxiosInstance }>(
+  Action.FETCH_FILM,
+  async (id, { extra: api }) => {
+    const { data } = await api.get<Film>(`${AppRoute.Film}/${id}`);
+
+    return data;
   });
 

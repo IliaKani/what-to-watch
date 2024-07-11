@@ -1,4 +1,5 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {useAppDispatch} from '../../hooks';
 import {useParams} from 'react-router-dom';
 // components
 import Footer from '../../components/footer/footer';
@@ -13,28 +14,33 @@ import PageNotFound from '../page-not-found/page-not-found';
 import {TABS} from '../../const';
 // hooks
 import {useAppSelector} from '../../hooks';
+import Spinner from '../../components/spinner/spinner';
+import {fetchFilm} from '../../store/action';
 
 export default function Film() {
   const {id} = useParams();
+  const dispatch = useAppDispatch();
   const [activeTab, setActiveTab] = useState<string>(TABS[0]);
+  const isFilmLoading = useAppSelector((state) => state.isFilmLoading);
+  const film = useAppSelector((state) => state.film);
 
   const handleTabClick = (value: string) => {
     setActiveTab(value);
   };
 
-  const currentFilm = useAppSelector((state) => state.films.find((film) => (
-    film.id === Number(id))
-  ));
+  useEffect(() => {
+    dispatch(fetchFilm(Number(id)));
+  }, [id, dispatch]);
 
-  const films = useAppSelector((state) => state.films);
-
-  if (!currentFilm) {
+  if (!film) {
     return (
       <PageNotFound />
     );
   }
 
-  const filteredFilms = films.filter((film) => film.genre === currentFilm.genre && film.id !== currentFilm.id).splice(0,4);
+  if (isFilmLoading) {
+    return <Spinner />;
+  }
 
   const {
     name,
@@ -43,7 +49,7 @@ export default function Film() {
     backgroundColor,
     genre,
     released,
-  } = currentFilm;
+  } = film;
 
   const filmStyle = {
     backgroundColor,
@@ -83,7 +89,7 @@ export default function Film() {
 
             <div className="film-card__desc">
               <Tabs activeTab={activeTab} onClick={handleTabClick}/>
-              <ChooseSection film={currentFilm} activeSection={activeTab} />
+              <ChooseSection film={film} activeSection={activeTab} />
             </div>
           </div>
         </div>
@@ -92,7 +98,7 @@ export default function Film() {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmList films={filteredFilms} />
+          <FilmList films={[]} />
         </section>
         <Footer/>
       </div>
