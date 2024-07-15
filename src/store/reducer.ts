@@ -1,13 +1,27 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {fetchFilms, fetchUserStatus, increaseCounter, resetCounter, setGenre, loginUser, logoutUser, fetchFilm} from './action';
+import {
+  fetchFilms,
+  fetchUserStatus,
+  increaseCounter,
+  resetCounter,
+  setGenre,
+  loginUser,
+  logoutUser,
+  fetchFilm,
+  fetchComments,
+  fetchSimilarFilms
+} from './action';
 import {AuthorizationStatus, Genres} from '../const';
 import {Film} from '../types/film';
+import {Comment} from '../types/comment';
 import {FetchUser} from '../types/fetch-user';
 
 type State = {
   activeGenre: string;
   films: Film[];
   film: Film | null;
+  similarFilms: Film[];
+  comments: Comment[];
   isFilmsLoading: boolean;
   isFilmLoading: boolean;
   counter: number;
@@ -19,6 +33,8 @@ const initialState: State = {
   activeGenre: Genres.AllGenres,
   isFilmsLoading: false,
   isFilmLoading: false,
+  similarFilms: [],
+  comments: [],
   films: [],
   film: null,
   counter: 1,
@@ -71,5 +87,11 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchFilm.rejected, (state) => {
       state.isFilmLoading = false;
+    })
+    .addCase(fetchSimilarFilms.fulfilled, (state, action) => {
+      state.similarFilms = action.payload;
+    })
+    .addCase(fetchComments.fulfilled, (state, action) => {
+      state.comments = action.payload;
     });
 });
