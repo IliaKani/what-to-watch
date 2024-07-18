@@ -23,8 +23,8 @@ export default function FilmList({films}: FilmListProps) {
   };
 
   const onMouseLeaveHandler = () => {
-    setActiveFilm(null);
     clearTimeout(timer);
+    setActiveFilm(null);
     setIsPlayingFilm(false);
   };
 

@@ -28,6 +28,7 @@ export const CARDS_PER_VIEW = 8;
 
 export const RATINGS = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 export const DEFAULT_CHECKED_INDEX = 4;
+export const MAX_SIMILAR_FILMS = 4;
 export const TABS = ['Overview', 'Details', 'Reviews'];
 export const enum RequestsStatus {Idle, Loading, Success, Failed}
 

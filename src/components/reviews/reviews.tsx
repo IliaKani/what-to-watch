@@ -1,8 +1,12 @@
-import {comments} from '../../mocks/comments';
+import {Comment} from '../../types/comment';
 import Review from '../review/review';
 import {prepareReviewsData} from '../../helpers/prepareReviewsData';
 
-export default function Reviews() {
+type ReviewsProp = {
+  comments: Comment[];
+}
+
+export default function Reviews({comments}: ReviewsProp) {
   const preparedData = prepareReviewsData(comments);
   return (
     <div className="film-card__reviews film-card__row">

@@ -1,21 +1,55 @@
-import {useState, ChangeEvent} from 'react';
+import {useState, ChangeEvent, FormEvent} from 'react';
+import {postComment} from '../../store/action';
+import {useAppDispatch} from '../../hooks';
 import RatingStar from '../rating-star/rating-star';
-import {RATINGS, DEFAULT_CHECKED_INDEX, REVIEW_MIN_LENGTH, REVIEW_MAX_LENGTH, MIN_RATING} from '../../const';
+import {
+  RATINGS,
+  DEFAULT_CHECKED_INDEX,
+  REVIEW_MIN_LENGTH,
+  REVIEW_MAX_LENGTH,
+  MIN_RATING,
+  AuthorizationStatus, AppRoute
+} from '../../const';
+import {useAppSelector} from '../../hooks';
+import {useNavigate} from 'react-router-dom';
 
-export default function ReviewForm() {
+type ReviewFormProps = {
+  id: number;
+}
+
+export default function ReviewForm({id}: ReviewFormProps) {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   const [formData, setFormData] = useState({
     rating: DEFAULT_CHECKED_INDEX,
     review: ''
   });
 
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const handleFieldChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});
   };
 
+  const handleSubmit = (e: FormEvent): void => {
+    e.preventDefault();
+    const {rating, review} = formData;
+    dispatch(postComment(
+      {
+        id,
+        rating,
+        comment: review
+      }
+    ))
+      .then(() => navigate(`${AppRoute.Film}/${id}`));
+
+    setFormData({rating: DEFAULT_CHECKED_INDEX, review: ''});
+  };
+
   return (
-    <form action="#" className="add-review__form">
+    <form action="#" className="add-review__form" onSubmit={handleSubmit}>
       <div className="rating">
         <div className="rating__stars">
           {
@@ -39,19 +73,21 @@ export default function ReviewForm() {
           value={formData.review}
           onChange={handleFieldChange}
         />
-        <div className="add-review__submit">
-          <button
-            className="add-review__btn"
-            type="submit"
-            disabled={
-              formData.review.length > REVIEW_MAX_LENGTH ||
-              formData.review.length < REVIEW_MIN_LENGTH ||
-              formData.rating === MIN_RATING
-            }
-          >
-            Post
-          </button>
-        </div>
+        {authorizationStatus === AuthorizationStatus.Auth && (
+          <div className="add-review__submit">
+            <button
+              className="add-review__btn"
+              type="submit"
+              disabled={
+                formData.review.length > REVIEW_MAX_LENGTH ||
+                formData.review.length < REVIEW_MIN_LENGTH ||
+                formData.rating === MIN_RATING
+              }
+            >
+              Post
+            </button>
+          </div>
+        )}
       </div>
     </form>
   );

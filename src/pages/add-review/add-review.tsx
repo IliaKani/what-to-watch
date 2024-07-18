@@ -38,7 +38,7 @@ export default function AddReview() {
         </div>
       </div>
       <div className="add-review">
-        <ReviewForm/>
+        <ReviewForm id={Number(id)}/>
       </div>
     </section>
   );

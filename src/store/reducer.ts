@@ -9,7 +9,8 @@ import {
   logoutUser,
   fetchFilm,
   fetchComments,
-  fetchSimilarFilms
+  fetchSimilarFilms,
+  postComment
 } from './action';
 import {AuthorizationStatus, Genres} from '../const';
 import {Film} from '../types/film';
@@ -92,6 +93,9 @@ export const reducer = createReducer(initialState, (builder) => {
       state.similarFilms = action.payload;
     })
     .addCase(fetchComments.fulfilled, (state, action) => {
+      state.comments = action.payload;
+    })
+    .addCase(postComment.fulfilled, (state, action) => {
       state.comments = action.payload;
     });
 });

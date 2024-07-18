@@ -11,11 +11,11 @@ import ChooseSection from '../../components/choose-section/choose-section';
 // pages
 import PageNotFound from '../page-not-found/page-not-found';
 // const
-import {TABS} from '../../const';
+import {MAX_SIMILAR_FILMS, TABS} from '../../const';
 // hooks
 import {useAppSelector} from '../../hooks';
 import Spinner from '../../components/spinner/spinner';
-import {fetchFilm} from '../../store/action';
+import {fetchComments, fetchFilm, fetchSimilarFilms} from '../../store/action';
 
 export default function Film() {
   const {id} = useParams();
@@ -23,13 +23,19 @@ export default function Film() {
   const [activeTab, setActiveTab] = useState<string>(TABS[0]);
   const isFilmLoading = useAppSelector((state) => state.isFilmLoading);
   const film = useAppSelector((state) => state.film);
+  const similarFilms = useAppSelector((state) => state.similarFilms.filter((currentFilm) => film && currentFilm.id !== film.id).slice(0, MAX_SIMILAR_FILMS));
+  const comments = useAppSelector((state) => state.comments);
 
   const handleTabClick = (value: string) => {
     setActiveTab(value);
   };
 
   useEffect(() => {
-    dispatch(fetchFilm(Number(id)));
+    Promise.all([
+      dispatch(fetchFilm(Number(id))),
+      dispatch(fetchSimilarFilms(Number(id))),
+      dispatch(fetchComments(Number(id)))
+    ]);
   }, [id, dispatch]);
 
   if (!film) {
@@ -89,7 +95,11 @@ export default function Film() {
 
             <div className="film-card__desc">
               <Tabs activeTab={activeTab} onClick={handleTabClick}/>
-              <ChooseSection film={film} activeSection={activeTab} />
+              <ChooseSection
+                film={film}
+                comments={comments}
+                activeSection={activeTab}
+              />
             </div>
           </div>
         </div>
@@ -98,7 +108,7 @@ export default function Film() {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmList films={[]} />
+          <FilmList films={similarFilms} />
         </section>
         <Footer/>
       </div>
