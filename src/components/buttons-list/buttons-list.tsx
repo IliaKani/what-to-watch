@@ -3,6 +3,8 @@ import {useNavigate} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {MouseEvent} from 'react';
 import {Add, Play} from '../icons/icons';
+import {useAppSelector} from '../../hooks';
+import {AuthorizationStatus} from '../../const';
 
 type ButtonListType = {
   id: number;
@@ -11,6 +13,7 @@ type ButtonListType = {
 
 export default function ButtonsList({id, hideButton}:ButtonListType) {
   const navigate = useNavigate();
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const handlePlay = () => {
     navigate(`${AppRoute.Player}/${id}`);
   };
@@ -41,7 +44,7 @@ export default function ButtonsList({id, hideButton}:ButtonListType) {
           </button>
       }
       {
-        hideButton !== ButtonsType.AddReview &&
+        authorizationStatus === AuthorizationStatus.Auth && hideButton !== ButtonsType.AddReview &&
           <a href="#" className="btn film-card__button" onClick={handleAddReview}>Add review</a>
       }
     </div>

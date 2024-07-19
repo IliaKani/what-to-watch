@@ -14,6 +14,17 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export enum NameSpace {
+  SiteProcess = 'SITE_PROCESS',
+  Comments = 'COMMENTS',
+  Favorite = 'FAVORITE',
+  Films = 'FILMS',
+  Film = 'FILM',
+  Similar = 'SIMILAR',
+  User = 'USER',
+}
+
 export enum ButtonsType {
   Play = 'play',
   MyList = 'my-list',
