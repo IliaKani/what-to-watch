@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {AuthorizationStatus, RequestsStatus} from '../../../const';
+import {AuthorizationStatus} from '../../../const';
 import {NameSpace} from '../../../const';
 import {fetchUserStatus, loginUser, logoutUser} from '../../thunks/user';
 import {FetchUser} from '../../../types/fetch-user';
@@ -7,13 +7,11 @@ import {FetchUser} from '../../../types/fetch-user';
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   user: FetchUser['avatarUrl'] | null;
-  status: RequestsStatus;
 };
 
 const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
   user: null,
-  status: RequestsStatus.Idle,
 };
 
 export const userProcess = createSlice({

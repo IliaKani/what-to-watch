@@ -5,6 +5,7 @@ import {MouseEvent} from 'react';
 import {Add, Play} from '../icons/icons';
 import {useAppSelector} from '../../hooks';
 import {AuthorizationStatus} from '../../const';
+import {getAuthorizationStatus} from '../../store/slices/user/selectors';
 
 type ButtonListType = {
   id: number;
@@ -13,7 +14,7 @@ type ButtonListType = {
 
 export default function ButtonsList({id, hideButton}:ButtonListType) {
   const navigate = useNavigate();
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const handlePlay = () => {
     navigate(`${AppRoute.Player}/${id}`);
   };

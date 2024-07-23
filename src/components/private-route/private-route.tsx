@@ -1,6 +1,7 @@
 import { Location, Navigate, useLocation } from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {useAppSelector} from '../../hooks';
+import {getUserInfo} from '../../store/slices/user/selectors';
 
 type PrivateRouteProps = {
   onlyUnAuth?: boolean;
@@ -13,8 +14,7 @@ type LocationState = {
 
 export default function PrivateRoute(props: PrivateRouteProps) {
   const {onlyUnAuth, children} = props;
-  /* eslint-disable */
-  const userInfo = useAppSelector((state) => state.user);
+  const userInfo = useAppSelector(getUserInfo);
   const location: Location<LocationState> = useLocation() as Location<LocationState>;
 
   if (userInfo && onlyUnAuth) {

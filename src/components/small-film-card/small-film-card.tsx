@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import {SmallFilmCardType} from '../../types/small-film-card-type';
 import ComponentPlayer from '../component-player/component-player';
 import {useAppDispatch} from '../../hooks';
-import {resetCounter} from '../../store/action';
+import {resetCounter} from '../../store/slices/site-process/site-process';
 
 export default function SmallFilmCard({name, isPlaying, previewImage, posterImage, previewVideoLink, id, onMouseEnter, onMouseLeave}: SmallFilmCardType) {
   const navigate = useNavigate();

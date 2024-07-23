@@ -4,7 +4,7 @@ import {Film} from '../../types/film';
 import {AxiosInstance} from 'axios';
 import {AppRoute} from '../../const';
 import {Action} from '../action';
-import {CommentData} from "../../types/comment-data";
+import {CommentData} from '../../types/comment-data';
 
 export const fetchComments = createAsyncThunk<Comment[], Film['id'], { extra: AxiosInstance }>(
   Action.FETCH_COMMENTS,

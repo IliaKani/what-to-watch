@@ -6,12 +6,11 @@ import ReviewForm from '../../components/review-form/review-form';
 import PageNotFound from '../page-not-found/page-not-found';
 // hooks
 import {useAppSelector} from '../../hooks';
+import {getFilm} from '../../store/slices/film/selectors';
 
 export default function AddReview() {
   const {id} = useParams();
-  const currentFilm = useAppSelector((state) => state.films.find((film) => (
-    film.id === Number(id))
-  ));
+  const currentFilm = useAppSelector(getFilm);
 
   if (!currentFilm) {
     return (

@@ -1,5 +1,5 @@
 import {useState, ChangeEvent, FormEvent} from 'react';
-import {postComment} from '../../store/action';
+import {postComment} from '../../store/thunks/comments';
 import {useAppDispatch} from '../../hooks';
 import RatingStar from '../rating-star/rating-star';
 import {
@@ -12,13 +12,14 @@ import {
 } from '../../const';
 import {useAppSelector} from '../../hooks';
 import {useNavigate} from 'react-router-dom';
+import {getAuthorizationStatus} from '../../store/slices/user/selectors';
 
 type ReviewFormProps = {
   id: number;
 }
 
 export default function ReviewForm({id}: ReviewFormProps) {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const [formData, setFormData] = useState({
     rating: DEFAULT_CHECKED_INDEX,

@@ -1,7 +1,8 @@
 import {useAppSelector, useAppDispatch} from '../../hooks';
-import {increaseCounter} from '../../store/action';
+import {increaseCounter} from '../../store/slices/site-process/site-process';
 import {CARDS_PER_VIEW} from '../../const';
 import {Film} from '../../types/film';
+import {getCounter} from '../../store/slices/site-process/selectors';
 
 type ShowMoreProps = {
   films: Film[];
@@ -10,7 +11,7 @@ type ShowMoreProps = {
 export default function ShowMore({films}: ShowMoreProps) {
 
   const dispatch = useAppDispatch();
-  const counter = useAppSelector((state) => state.counter);
+  const counter = useAppSelector(getCounter);
   const checkLength = counter * CARDS_PER_VIEW < films.length;
 
   const handleIncreaseCounter = () => {

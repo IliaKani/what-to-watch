@@ -1,11 +1,12 @@
 import {useAppSelector, useAppDispatch} from '../../hooks';
-import {setGenre, resetCounter} from '../../store/action';
+import {setGenre, resetCounter} from '../../store/slices/site-process/site-process';
 import {Genres} from '../../const';
 import Genre from '../genre/genre';
+import {getActiveGenre} from '../../store/slices/site-process/selectors';
 
 export default function GenreList() {
   const dispatch = useAppDispatch();
-  const activeGenre = useAppSelector((state) => state.activeGenre);
+  const activeGenre = useAppSelector(getActiveGenre);
 
   const handleClick = (name: string) => {
     dispatch(setGenre(name));

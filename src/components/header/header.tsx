@@ -3,7 +3,8 @@ import {AppRoute} from '../../const';
 import {Link, useNavigate} from 'react-router-dom';
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import {AuthorizationStatus} from '../../const';
-import {logoutUser} from '../../store/action';
+import {logoutUser} from '../../store/thunks/user';
+import {getAuthorizationStatus, getUserInfo} from '../../store/slices/user/selectors';
 
 type HeaderProps = {
   title?: string;
@@ -12,8 +13,8 @@ type HeaderProps = {
 }
 
 export default function Header({title, extraClass, hideSignIn}: HeaderProps) {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const user = useAppSelector((state) => state.user);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const user = useAppSelector(getUserInfo);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -34,7 +35,7 @@ export default function Header({title, extraClass, hideSignIn}: HeaderProps) {
       {title && (
         <h1 className="page-title user-page__title">{title}</h1>
       )}
-      {authorizationStatus === AuthorizationStatus.Auth && (
+      {authorizationStatus === AuthorizationStatus.Auth && user !== null && (
         <ul className="user-block">
           <li className="user-block__item">
             <div className="user-block__avatar" onClick={() => navigate(AppRoute.MyList)}>
