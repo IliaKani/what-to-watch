@@ -1,89 +1,82 @@
-# Руководство по работе с проектом
+## 1. Description of functionality
+   
+### 1.1. Application pages
 
+The application consists of several pages: Main (/), Sign In (/login), MyList (/mylist), Film (/films/:id), Add review (/films/:id/review), Player (/player/ :id).
 
-Данный проект создан с помощью [Create React App](https://github.com/facebook/create-react-app).
+The MyList and Add review pages are available only to authorized users. If the user is not authorized, then when navigating to these pages, they are redirected to the Sign In page.
 
-## Структура проекта
+If the user is not authorized, then when they try to go to a private page, they are redirected to the “Sign In” page (/login).
 
----
+In the right corner of the header, the user’s avatar and the “Sign Out” button (if the user is authorized) or the “Sign In” link (if the user is not authorized) are displayed.
 
-_Не удаляйте и не изменяйте папки и файлы:_
-_`.editorconfig`, `.gitattributes`, `.gitignore`, `package.json`._
+Clicking on the “Sign Out” button ends the work session - exiting the closed part of the application.
 
----
+Clicking on the user's avatar takes you to the MyList page (/mylist).
 
-### public
+Accessing a non-existent page (for example, through the address bar) does not lead to errors in the application, but is correctly processed by routing. The user is redirected to a “404” page. Page design is at the discretion of the student. In the simplest case, this could be a page with the text 404 Not Found and a link to go to the main page of the application.
 
-Директория для размещения статичных ресурсов (шрифты, стили, изображения и так далее). Корневая директория проекта.
+#### 1.1.1. Main page
 
-**Обратите внимание**, файл `Readme.md`, в директории `public`, содержит описание подготовительного процесса, который вам необходимо выполнить перед тем, как приступать к работе над проектом.
+The main page presents genres and movie previews.
 
-### src
+A page with a detailed description of the film is available to all users.
 
-В директории размещаются исходный код проекта: компоненты, файлы с тестами, модули и так далее. Структура директории `src` может быть произвольной.
+The page header displays the poster and cover of the promotional film.
 
-## Сценарии
+The promotional film can be watched immediately by clicking the “Play” button or added to the “My List”.
 
-После создания проекта вам доступны следующие сценарии. Обратите внимание, для запуска сценария, вы должны находится в директории проекта (`./project`).
+Receiving a promotional film for the main page is performed by a separate request to the server (see “Routes”).
 
-### Запуск проекта
+After downloading the application, 8 movie cards of arbitrary genres are displayed. “All genres” is highlighted in the list of genres.
 
-```bash
-npm start
-```
+The list of genres is built based on information about films received from the server.
 
-После запуска, приложение доступно для просмотра в браузере по адресу [http://localhost:3000](http://localhost:3000).
+The list of genres displays no more than 9 genres + All genres (displays films of any genres in the list).
 
-При сохранении изменений, проект перезапускается и обновляется в браузере. Таким образом, вы можете следить за разработкой проекта в режиме реального времени.
+#### 1.1.1.1. Movie list
 
-**Обратите внимание**, режим разработки настроен таким образом, при котором ошибки, найденные статическим анализатором кода **ESLint**, отображаются в той же вкладке браузера, в которой запущен проект.
+When changing the genre or receiving information about films from the server, no more than 8 films are displayed in the list of films.
 
-### Запуск тестов
+Showing additional films is done by clicking on the “Show more” button.
 
-```bash
-npm test
-```
+Clicking on the “Show more” button adds the next 8 films to the list or the remaining films if there are fewer.
 
-Запуск тестов приложения в интерактивном режиме.
+After all movies corresponding to the selected genre are displayed, the “Show more” button is hidden.
 
-В данном случае, имеются в виду тесты, которые вынесены в отдельные файлы, в имени которых присутствует суффикс `*.test.*`. Например, `app.test.tsx`.
+When you move from the main page to other pages of the application and back, the counter of the films shown is reset and the countdown begins again.
 
-Подробную информацию вы можете найти на странице [Запуск тестов](https://facebook.github.io/create-react-app/docs/running-tests).
+#### 1.1.1.2. Movie card in movie list
 
-### Проверка линтером
+The movie card displays the following information:
 
-```bash
-npm run lint
-```
+* Image (movie preview).
+* Movie title.
+* Clicking on the image or title of a movie takes you to the “Film” page (/films/:id).
 
-Запуск проверки проекта статическим анализатором кода **ESLint**.
+When you hover and hold the mouse cursor over a movie image, a video preview of the movie starts playing instead of the image. The video player is activated one second after hovering and holding the cursor on the card with the movie.
 
-Анализ кода производится только в файлах, которые находятся в директории `src`.
+The movie preview plays without sound. If the user moves the cursor from the card, playback stops and the card returns to its original state - instead of a video, a static image is displayed (as it was originally). When you hover over the card again, the preview playback starts again.
 
-**Обратите внимание**, при запуске данной команды, ошибки выводятся в терминал.
+#### 1.1.2. Movie description page
 
-### Сборка проекта
+A page with a detailed description of the film is available at /films/:id, where id is the film identifier received from the server. For example: /films/123.
 
-```bash
-npm run build
-```
+A page with a detailed description of the film is available to all users.
 
-Запуск сборки приложения.
+The page header contains the following set of information:
 
-В процессе сборки приложения, код приложения оптимизируется и минимизируется, для достижения наилучшей производительности.
+* Large poster.
+* Film cover.
+* Movie title.
+* Genre.
+* Year of release.
+* Button to start viewing.
+* Button to add to the “To watch” list.
+* Button to go to the page for adding a review.
 
-Во время выполнения инструкций по сборке проекта, в корне проекта создается директория `build`, в которую будут помещены результирующие файлы. После сборки проект готов к публикации.
+More detailed information about the film is presented on three tabs:
 
-Подробную информацию вы можете найти на странице [Развертывание проекта](https://facebook.github.io/create-react-app/docs/deployment).
-
-### Извлечение конфигурации проекта
-
-```bash
-npm run eject
-```
-
-**Обратите внимание**, при запуске команды `npm run eject` нет возможности вернуть внесённые изменения обратно!
-
-Выполнение данной команды, `react-scripts` скопирует все конфигурационные файлы и скрипты в корень проекта. Данный процесс позволяет получить полный контроль над конфигурацией проекта.
-
-Не используйте данную команду, если не уверены как именно она работает или к какому результату приведёт ее выполнение.
+* Overview. General information.
+* Details. Extended information.
+* Reviews. Reviews.
