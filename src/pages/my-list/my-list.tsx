@@ -6,11 +6,15 @@ import Header from '../../components/header/header';
 import {useAppSelector} from '../../hooks';
 // const
 import {Genres} from '../../const';
+import {getActiveGenre} from '../../store/slices/site-process/selectors';
+import {getFilms} from '../../store/slices/films/selectors';
 
 export default function MyList() {
-  const films = useAppSelector((state) => state.films.filter((film) => (
-    state.activeGenre === Genres.AllGenres ? film : film.genre === state.activeGenre)
-  ));
+  const activeGenre = useAppSelector(getActiveGenre);
+
+  const films = useAppSelector(getFilms).filter((film) => (
+    activeGenre === Genres.AllGenres ? film : film.genre === activeGenre)
+  );
 
   return (
     <div className="user-page">

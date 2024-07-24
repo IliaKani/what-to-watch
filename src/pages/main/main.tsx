@@ -1,30 +1,48 @@
 // components
-import FilmCard, {FilmCardProps} from '../../components/film-card/film-card';
+import {useEffect} from 'react';
 import Footer from '../../components/footer/footer';
 import FilmList from '../../components/film-list/film-list';
 import GenreList from '../../components/genre-list/genre-list';
 import ShowMore from '../../components/show-more/show-more';
 // hooks
-import {useAppSelector} from '../../hooks';
+import {useAppSelector, useAppDispatch} from '../../hooks';
 // const
-import {CARDS_PER_VIEW, Genres} from '../../const';
+import {CARDS_PER_VIEW, Genres, RequestsStatus} from '../../const';
+import {getFilms} from '../../store/slices/films/selectors';
+import {getActiveGenre, getCounter, getPromoFilm, getPromoFilmStatus} from '../../store/slices/site-process/selectors';
+import Spinner from '../../components/spinner/spinner';
+import Promo from '../../components/promo/promo';
+import {fetchPromoFilm} from '../../store/thunks/promo';
 
-type MainProps = {
-  filmCardProps: FilmCardProps;
-}
 
-export default function Main({filmCardProps}: MainProps) {
+export default function Main() {
+  const dispatch = useAppDispatch();
+  const activeGenre = useAppSelector(getActiveGenre);
 
-  const films = useAppSelector((state) => state.films.filter((film) => (
-    state.activeGenre === Genres.AllGenres ? film : film.genre === state.activeGenre)
-  ));
+  const films = useAppSelector(getFilms).filter((film) => (
+    activeGenre === Genres.AllGenres ? film : film.genre === activeGenre)
+  );
 
-  const counter = useAppSelector((state) => state.counter);
+  const counter = useAppSelector(getCounter);
   const filteredFilms = films.slice(0, counter * CARDS_PER_VIEW);
+
+  const promoFilm = useAppSelector(getPromoFilm);
+  const promoFilmStatus = useAppSelector(getPromoFilmStatus);
+
+  useEffect(() => {
+    dispatch(fetchPromoFilm());
+  }, [dispatch]);
+
+  if (promoFilmStatus === RequestsStatus.Loading) {
+    return <Spinner />;
+  }
 
   return (
     <>
-      <FilmCard {...filmCardProps}/>
+      {
+        promoFilm &&
+          <Promo {...promoFilm}/>
+      }
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>

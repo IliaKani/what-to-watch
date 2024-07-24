@@ -8,23 +8,27 @@ import ButtonsList from '../../components/buttons-list/buttons-list';
 import FilmList from '../../components/film-list/film-list';
 import Tabs from '../../components/tabs/tabs';
 import ChooseSection from '../../components/choose-section/choose-section';
-// pages
-import PageNotFound from '../page-not-found/page-not-found';
 // const
-import {MAX_SIMILAR_FILMS, TABS} from '../../const';
+import {MAX_SIMILAR_FILMS, RequestsStatus, TABS} from '../../const';
 // hooks
 import {useAppSelector} from '../../hooks';
 import Spinner from '../../components/spinner/spinner';
-import {fetchComments, fetchFilm, fetchSimilarFilms} from '../../store/action';
+import {fetchSimilarFilms} from '../../store/thunks/similar';
+import {fetchComments} from '../../store/thunks/comments';
+import {fetchFilm} from '../../store/thunks/film';
+import {getFilm, getFilmStatus} from '../../store/slices/film/selectors';
+import {getSimilar} from '../../store/slices/similar/selectors';
+import {getComments} from '../../store/slices/comments/selectors';
+import PageNotFound from '../page-not-found/page-not-found';
 
 export default function Film() {
   const {id} = useParams();
   const dispatch = useAppDispatch();
   const [activeTab, setActiveTab] = useState<string>(TABS[0]);
-  const isFilmLoading = useAppSelector((state) => state.isFilmLoading);
-  const film = useAppSelector((state) => state.film);
-  const similarFilms = useAppSelector((state) => state.similarFilms.filter((currentFilm) => film && currentFilm.id !== film.id).slice(0, MAX_SIMILAR_FILMS));
-  const comments = useAppSelector((state) => state.comments);
+  const filmStatus = useAppSelector(getFilmStatus);
+  const currentFilm = useAppSelector(getFilm);
+  const similarFilms = useAppSelector(getSimilar).slice(0, MAX_SIMILAR_FILMS);
+  const comments = useAppSelector(getComments);
 
   const handleTabClick = (value: string) => {
     setActiveTab(value);
@@ -38,14 +42,14 @@ export default function Film() {
     ]);
   }, [id, dispatch]);
 
-  if (!film) {
+  if (filmStatus === RequestsStatus.Loading) {
+    return <Spinner />;
+  }
+
+  if (filmStatus === RequestsStatus.Failed || !currentFilm) {
     return (
       <PageNotFound />
     );
-  }
-
-  if (isFilmLoading) {
-    return <Spinner />;
   }
 
   const {
@@ -55,7 +59,7 @@ export default function Film() {
     backgroundColor,
     genre,
     released,
-  } = film;
+  } = currentFilm;
 
   const filmStyle = {
     backgroundColor,
@@ -96,7 +100,7 @@ export default function Film() {
             <div className="film-card__desc">
               <Tabs activeTab={activeTab} onClick={handleTabClick}/>
               <ChooseSection
-                film={film}
+                film={currentFilm}
                 comments={comments}
                 activeSection={activeTab}
               />

@@ -3,7 +3,7 @@ import {useAppDispatch} from '../../hooks';
 // components
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import {loginUser} from '../../store/action';
+import {loginUser} from '../../store/thunks/user';
 
 export default function Login() {
   const emailRef = useRef<HTMLInputElement | null>(null);

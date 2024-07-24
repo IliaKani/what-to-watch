@@ -8,6 +8,7 @@ export enum AppRoute {
   Comments = '/comments',
   Player = '/player',
   Similar = '/similar',
+  Promo = '/promo',
 }
 export enum AuthorizationStatus {
   Auth = 'AUTH',

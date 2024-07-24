@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {useEffect} from 'react';
 
 // pages
 import Main from '../../pages/main/main';
@@ -10,28 +11,32 @@ import Login from '../../pages/login/login';
 import MyList from '../../pages/my-list/my-list';
 
 // components
-import {FilmCardProps} from '../film-card/film-card';
 import PrivateRoute from '../private-route/private-route';
 
 // const
 import {AppRoute} from '../../const';
-
-const filmCardMock: FilmCardProps = {
-  id: 1,
-  title: 'The Grand Budapest Hotel',
-  genre: 'Drama',
-  year: '2014',
-  posterUrl: 'the-grand-budapest-hotel-poster.jpg',
-  pictureUrl: 'bg-the-grand-budapest-hotel.jpg',
-};
+import {getToken} from '../../services/token';
+import {useAppDispatch} from '../../hooks';
+import {fetchFilms} from '../../store/thunks/films';
+import {fetchUserStatus} from '../../store/thunks/user';
 
 export default function App() {
+  const dispatch = useAppDispatch();
+  const token = getToken();
+
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchUserStatus());
+    }
+    dispatch(fetchFilms());
+  }, [token, dispatch]);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           index
-          element={<Main filmCardProps={filmCardMock} />}
+          element={<Main/>}
         />
         <Route
           path={AppRoute.Login}
