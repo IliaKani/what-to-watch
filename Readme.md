@@ -80,3 +80,54 @@ More detailed information about the film is presented on three tabs:
 * Overview. General information.
 * Details. Extended information.
 * Reviews. Reviews.
+
+
+#### 1.1.2.1. Tabs on the movie description page
+
+Review. General information about the film:
+
+* Film description.
+* Grade. For example, 8.9 (always one decimal place).
+* Rating description (Bad, Normal, Good, Very Good, Excellent).
+* Number of votes.
+* Director.
+* List of actors.
+
+Details. Extended information:
+
+* Director.
+* Cast.
+* Duration (hours, minutes).
+* Genre.
+* Year of release.
+* Reviews. List of user reviews.
+
+#### 1.1.2.2. Film rating
+
+The textual representation of the film rating is formed according to the following rules:
+
+* from 0 to 3 - Bad.
+* from 3 to 5 - Normal.
+* from 5 to 8 - Good.
+* from 8 to 10 - Very good.
+* 10 - Awesome.
+
+#### 1.1.2.3. Similar films
+
+The “More like this” block shows similar films. The block displays up to 4 cards of similar films.
+
+A list of similar films is downloaded from the server (see “Routes”).
+
+The cards contain the same set of information as the cards on the main page.
+
+Clicking on a card from the “More like this” block takes you to the “Film” page of the corresponding film.
+
+#### 1.1.2.4. Reviews
+
+**Each review contains:**
+
+* Review text.
+* User rating.
+* Username.
+* Review date in the format: Month (full name), day, year. For example: December 24, 2018.
+* Adding a new review is done by clicking the “Add review” button. The button should only be visible to authorized users.
