@@ -1,4 +1,4 @@
-import {MouseEvent} from 'react';
+import {MouseEvent, ReactNode} from 'react';
 import {AppRoute} from '../../const';
 import {Link, useNavigate} from 'react-router-dom';
 import {useAppSelector, useAppDispatch} from '../../hooks';
@@ -7,12 +7,13 @@ import {logoutUser} from '../../store/thunks/user';
 import {getAuthorizationStatus, getUserInfo} from '../../store/slices/user/selectors';
 
 type HeaderProps = {
+  children?: ReactNode;
   title?: string;
   extraClass?: string;
   hideSignIn?: boolean;
 }
 
-export default function Header({title, extraClass, hideSignIn}: HeaderProps) {
+export default function Header({title, extraClass, hideSignIn, children}: HeaderProps) {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const user = useAppSelector(getUserInfo);
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ export default function Header({title, extraClass, hideSignIn}: HeaderProps) {
           <span className="logo__letter logo__letter--3">W</span>
         </Link>
       </div>
+      {children}
       {title && (
         <h1 className="page-title user-page__title">{title}</h1>
       )}
@@ -47,7 +49,7 @@ export default function Header({title, extraClass, hideSignIn}: HeaderProps) {
           </li>
         </ul>
       )}
-      {!hideSignIn && authorizationStatus === AuthorizationStatus.NoAuth && (
+      {!hideSignIn && authorizationStatus !== AuthorizationStatus.Auth && (
         <div className="user-block">
           <Link to={AppRoute.Login} className="user-block__link">Sign in</Link>
         </div>

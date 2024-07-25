@@ -12,7 +12,6 @@ import ChooseSection from '../../components/choose-section/choose-section';
 import {MAX_SIMILAR_FILMS, RequestsStatus, TABS} from '../../const';
 // hooks
 import {useAppSelector} from '../../hooks';
-import Spinner from '../../components/spinner/spinner';
 import {fetchSimilarFilms} from '../../store/thunks/similar';
 import {fetchComments} from '../../store/thunks/comments';
 import {fetchFilm} from '../../store/thunks/film';
@@ -20,6 +19,7 @@ import {getFilm, getFilmStatus} from '../../store/slices/film/selectors';
 import {getSimilar} from '../../store/slices/similar/selectors';
 import {getComments} from '../../store/slices/comments/selectors';
 import PageNotFound from '../page-not-found/page-not-found';
+import LoadingSpinner from '../../components/loading-spinner/loading-spinner';
 
 export default function Film() {
   const {id} = useParams();
@@ -43,7 +43,7 @@ export default function Film() {
   }, [id, dispatch]);
 
   if (filmStatus === RequestsStatus.Loading) {
-    return <Spinner />;
+    return <LoadingSpinner />;
   }
 
   if (filmStatus === RequestsStatus.Failed || !currentFilm) {

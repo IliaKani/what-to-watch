@@ -10,9 +10,10 @@ import {useAppSelector, useAppDispatch} from '../../hooks';
 import {CARDS_PER_VIEW, Genres, RequestsStatus} from '../../const';
 import {getFilms} from '../../store/slices/films/selectors';
 import {getActiveGenre, getCounter, getPromoFilm, getPromoFilmStatus} from '../../store/slices/site-process/selectors';
-import Spinner from '../../components/spinner/spinner';
+import LoadingSpinner from '../../components/loading-spinner/loading-spinner';
 import Promo from '../../components/promo/promo';
 import {fetchPromoFilm} from '../../store/thunks/promo';
+import PageNotFound from '../page-not-found/page-not-found';
 
 
 export default function Main() {
@@ -34,7 +35,11 @@ export default function Main() {
   }, [dispatch]);
 
   if (promoFilmStatus === RequestsStatus.Loading) {
-    return <Spinner />;
+    return <LoadingSpinner />;
+  }
+
+  if (!promoFilm) {
+    return <PageNotFound />;
   }
 
   return (

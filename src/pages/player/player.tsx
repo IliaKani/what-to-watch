@@ -11,7 +11,7 @@ import {useAppSelector} from '../../hooks';
 import {getFilm, getFilmStatus} from '../../store/slices/film/selectors';
 import {fetchFilm} from '../../store/thunks/film';
 import {RequestsStatus} from '../../const';
-import Spinner from '../../components/spinner/spinner';
+import LoadingSpinner from '../../components/loading-spinner/loading-spinner';
 
 export default function Player() {
   const {id} = useParams();
@@ -26,7 +26,7 @@ export default function Player() {
   }, [id, dispatch]);
 
   if (filmStatus === RequestsStatus.Loading) {
-    return <Spinner />;
+    return <LoadingSpinner/>;
   }
 
   if (filmStatus === RequestsStatus.Failed || !currentFilm) {

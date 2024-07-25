@@ -7,6 +7,7 @@ import PageNotFound from '../page-not-found/page-not-found';
 // hooks
 import {useAppSelector} from '../../hooks';
 import {getFilm} from '../../store/slices/film/selectors';
+import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 
 export default function AddReview() {
   const {id} = useParams();
@@ -31,7 +32,9 @@ export default function AddReview() {
           <img src={previewImage} alt={name} />
         </div>
         <h1 className="visually-hidden">WTW</h1>
-        <Header/>
+        <Header>
+          <Breadcrumbs {...currentFilm} />
+        </Header>
         <div className="film-card__poster film-card__poster--small">
           <img src={posterImage} alt={name} width={218} height={327} />
         </div>
