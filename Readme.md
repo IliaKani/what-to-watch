@@ -131,3 +131,21 @@ Clicking on a card from the “More like this” block takes you to the “Film�
 * Username.
 * Review date in the format: Month (full name), day, year. For example: December 24, 2018.
 * Adding a new review is done by clicking the “Add review” button. The button should only be visible to authorized users.
+
+#### 1.1.3. Feedback form
+
+When you click on the “Add review” button, you go to the Add review page (/films/:id/review).
+
+The page is available only to authorized users. Unauthorized users are redirected to the Sign In page.
+
+The user rates the film from 1 to 10. The rating is given by highlighting a certain number of stars. If a film does not yet have ratings from users, its rating on the server is 0.
+
+The review text must be no less than 50 and no more than 400 characters.
+
+Until the user has given a rating and entered the allowed amount of text, the button to send a review is not active.
+
+When you click the "Post" button and submit the data, the "Submit" button and the entire form should be blocked. The form and button are unlocked if the submission is successful or if an error occurs.
+
+If the form is submitted successfully, the user is redirected to the current movie card.
+
+If an error occurs, the user should be notified. The way the error is displayed is at the discretion of the developer.
