@@ -29,13 +29,15 @@ export default function Player() {
     return <LoadingSpinner/>;
   }
 
-  if (filmStatus === RequestsStatus.Failed || !currentFilm) {
+  if (filmStatus === RequestsStatus.Failed) {
     return (
       <PageNotFound />
     );
   }
 
   return (
-    <VideoPlayer {...currentFilm}/>
+    currentFilm && (
+      <VideoPlayer {...currentFilm}/>
+    )
   );
 }

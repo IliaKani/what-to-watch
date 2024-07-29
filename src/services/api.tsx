@@ -41,10 +41,8 @@ export const createAPI = (): AxiosInstance => {
   api.interceptors.response.use(
     (response) => response,
     (error: AxiosError<DetailMessageType>) => {
-      console.log('here');
       if (error.response && shouldDisplayError(error.response)) {
         const detailMessage = (error.response.data);
-        console.log('detailMessage', detailMessage);
         toast.warn(detailMessage.error);
       }
 
