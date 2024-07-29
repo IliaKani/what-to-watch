@@ -149,3 +149,17 @@ When you click the "Post" button and submit the data, the "Submit" button and th
 If the form is submitted successfully, the user is redirected to the current movie card.
 
 If an error occurs, the user should be notified. The way the error is displayed is at the discretion of the developer.
+
+#### 1.1.4. MyList page
+
+The page contains information about films added to the “To Watch” list.
+
+The data for the MyList page is always loaded from the server. A separate route is provided for this (see section “Interaction with the server”).
+
+Adding to the “To Watch” list is done by clicking on the “+ MyList” button on the “Film” page and on the main page for a promotional film. The “+ MyList” button is replaced with the “✓ MyList” button.
+
+If a movie has already been added to the “To Watch” list, clicking on the “✓ My List” button removes the movie from the list. The “✓ MyList” button is replaced with the “+ MyList” button.
+
+The MyList page is available only to authorized users. Unauthorized users are redirected to the "Sign In" page.
+
+Clicking on a film card (image, title) takes you to the “Film” page with a detailed description of the film.
