@@ -27,7 +27,9 @@ export default function Film() {
   const [activeTab, setActiveTab] = useState<string>(TABS[0]);
   const filmStatus = useAppSelector(getFilmStatus);
   const currentFilm = useAppSelector(getFilm);
-  const similarFilms = useAppSelector(getSimilar).slice(0, MAX_SIMILAR_FILMS);
+  const similarFilms = useAppSelector(getSimilar)
+    .filter((film) => film.id !== Number(id))
+    .slice(0, MAX_SIMILAR_FILMS);
   const comments = useAppSelector(getComments);
 
   const handleTabClick = (value: string) => {
@@ -59,6 +61,7 @@ export default function Film() {
     backgroundColor,
     genre,
     released,
+    isFavorite
   } = currentFilm;
 
   const filmStyle = {
@@ -84,7 +87,7 @@ export default function Film() {
                 <span className="film-card__genre">{genre}</span>
                 <span className="film-card__year">{released}</span>
               </p>
-              <ButtonsList id={Number(id)}/>
+              <ButtonsList id={Number(id)} isFavorite={isFavorite}/>
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@ import ButtonsList from '../buttons-list/buttons-list';
 import {ButtonsType} from '../../const';
 import {Film} from '../../types/film';
 
-export default function Promo({id, name, genre, released, posterImage, backgroundImage}: Film) {
+export default function Promo({id, name, genre, released, posterImage, backgroundImage, isFavorite}: Film) {
   return (
     <section className="film-card">
       <div className="film-card__bg">
@@ -22,7 +22,7 @@ export default function Promo({id, name, genre, released, posterImage, backgroun
               <span className="film-card__genre">{genre}</span>
               <span className="film-card__year">{released}</span>
             </p>
-            <ButtonsList id={id} hideButton={ButtonsType.AddReview}/>
+            <ButtonsList id={id} hideButton={ButtonsType.AddReview} isFavorite={isFavorite}/>
           </div>
         </div>
       </div>

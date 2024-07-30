@@ -14,21 +14,31 @@ import MyList from '../../pages/my-list/my-list';
 import PrivateRoute from '../private-route/private-route';
 
 // const
-import {AppRoute} from '../../const';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import {getToken} from '../../services/token';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchFilms} from '../../store/thunks/films';
 import {fetchUserStatus} from '../../store/thunks/user';
+import {getAuthorizationStatus, getUserInfo} from '../../store/slices/user/selectors';
+import {fetchFavorite} from '../../store/thunks/favorite';
 
 export default function App() {
   const dispatch = useAppDispatch();
   const token = getToken();
+  const user = useAppSelector(getUserInfo);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
     if (token) {
       dispatch(fetchUserStatus());
     }
     dispatch(fetchFilms());
+  }, [token, dispatch]);
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth && user !== null) {
+      dispatch(fetchFavorite());
+    }
   }, [token, dispatch]);
 
   return (

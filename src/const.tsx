@@ -3,6 +3,7 @@ export enum AppRoute {
   Login = '/login',
   Logout = '/logout',
   MyList = '/mylist',
+  Favorite = '/favorite',
   Film = '/films',
   Review = '/review',
   Comments = '/comments',
@@ -43,6 +44,7 @@ export const DEFAULT_CHECKED_INDEX = 4;
 export const MAX_SIMILAR_FILMS = 4;
 export const TABS = ['Overview', 'Details', 'Reviews'];
 export const enum RequestsStatus {Idle, Loading, Success, Failed}
+export const enum FavoriteStatus { Removed, Added }
 
 export enum RatingStatus {
   Bad = 'Bad',

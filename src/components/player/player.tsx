@@ -30,9 +30,7 @@ export default function Player({videoLink, posterImage, name}: Film) {
   };
 
   const handleProgress = () => {
-    const durationProp = videoRef.current.duration;
-    const currentTimeProp = videoRef.current.currentTime;
-    const progressProp = (currentTimeProp / durationProp) * 100;
+    const progressProp = (videoRef.current.currentTime / videoRef.current.duration) * 100;
     setProgress(progressProp);
   };
 

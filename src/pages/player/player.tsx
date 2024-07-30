@@ -1,7 +1,6 @@
 import {useEffect} from 'react';
 import {useAppDispatch} from '../../hooks';
 import {useParams} from 'react-router-dom';
-
 // components
 import VideoPlayer from '../../components/player/player';
 // pages

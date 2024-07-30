@@ -5,6 +5,8 @@ import {useAppSelector, useAppDispatch} from '../../hooks';
 import {AuthorizationStatus} from '../../const';
 import {logoutUser} from '../../store/thunks/user';
 import {getAuthorizationStatus, getUserInfo} from '../../store/slices/user/selectors';
+import {clearPromoFavoriteStatus} from '../../store/slices/site-process/site-process';
+import {clearFavoriteStatus} from '../../store/slices/film/film';
 
 type HeaderProps = {
   children?: ReactNode;
@@ -21,7 +23,11 @@ export default function Header({title, extraClass, hideSignIn, children}: Header
 
   const handleLogout = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    dispatch(logoutUser());
+    dispatch(logoutUser())
+      .then(() => {
+        dispatch(clearFavoriteStatus());
+        dispatch(clearPromoFavoriteStatus());
+      });
   };
 
   return (

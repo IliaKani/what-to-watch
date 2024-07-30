@@ -32,6 +32,16 @@ const siteProcess = createSlice({
     resetCounter (state: SiteProcessData) {
       state.counter = 1;
     },
+    updatePromo (state: SiteProcessData, action: PayloadAction<number | null>) {
+      if (state?.promo?.id === action.payload) {
+        state.promo.isFavorite = !state.promo.isFavorite;
+      }
+    },
+    clearPromoFavoriteStatus (state: SiteProcessData) {
+      if (state.promo) {
+        state.promo.isFavorite = false;
+      }
+    },
   },
   extraReducers(builder) {
     builder
@@ -50,5 +60,5 @@ const siteProcess = createSlice({
   }
 });
 
-export const { setGenre, increaseCounter, resetCounter } = siteProcess.actions;
+export const { setGenre, increaseCounter, resetCounter, updatePromo, clearPromoFavoriteStatus } = siteProcess.actions;
 export {siteProcess};

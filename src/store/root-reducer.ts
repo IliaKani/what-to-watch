@@ -7,6 +7,7 @@ import {similarFilmsData} from './slices/similar/similar';
 import {filmsData} from './slices/films/films';
 import {filmData} from './slices/film/film';
 import {commentsData} from './slices/comments/comments';
+import {favoriteData} from './slices/favorite/favorite';
 
 export const rootReducer = combineReducers({
   [NameSpace.SiteProcess]: siteProcess.reducer,
@@ -15,4 +16,5 @@ export const rootReducer = combineReducers({
   [NameSpace.Similar]: similarFilmsData.reducer,
   [NameSpace.Comments]: commentsData.reducer,
   [NameSpace.User]: userProcess.reducer,
+  [NameSpace.Favorite]: favoriteData.reducer,
 });
