@@ -163,3 +163,19 @@ If a movie has already been added to the “To Watch” list, clicking on the �
 The MyList page is available only to authorized users. Unauthorized users are redirected to the "Sign In" page.
 
 Clicking on a film card (image, title) takes you to the “Film” page with a detailed description of the film.
+
+#### 1.1.5. Sign In page
+
+The “Sign in” page is available at /login.
+
+To enter the service, the user enters a login (email) and password.
+
+Since the service does not have the ability to register, the login and password can be anything, but not empty.
+
+The correct email must be entered in the “login” field.
+
+A valid password must be entered in the “password” field. A valid password is a password that consists of at least one letter and number.
+
+The page is available only to unauthorized users. Authorized users are redirected to the main page.
+
+Error information is displayed in the error block.
