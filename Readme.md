@@ -179,3 +179,19 @@ A valid password must be entered in the “password” field. A valid password i
 The page is available only to unauthorized users. Authorized users are redirected to the main page.
 
 Error information is displayed in the error block.
+
+#### 1.1.6. Watching films
+
+When you click on the “Play” button, the player is drawn and the selected movie begins to be shown. An animated spinner is displayed as the movie loads. The implementation of the spinner is left to the discretion of the developer.
+
+**Player functionality:**
+
+* "Play/Pause". Start/stop video.
+* "Fullscreen". Switch to full screen mode.
+* "Time Left". Remaining video playback time. The time is displayed in the format -MM:SS - minutes, seconds or -HH:MM:SS - hours, minutes, seconds, if the video duration is more than one hour, for example:
+* Less than an hour: -53:12;
+* More than an hour: -01:45:35.
+* "Exit". Stop viewing. The player is hiding.
+* The player is implemented using <video>.
+
+To convert video playback time to the required format, the developer can use an additional package at his discretion.
