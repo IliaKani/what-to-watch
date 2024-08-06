@@ -195,3 +195,8 @@ When you click on the “Play” button, the player is drawn and the selected mo
 * The player is implemented using <video>.
 
 To convert video playback time to the required format, the developer can use an additional package at his discretion.
+
+#### 1.1.7. Other
+Depending on the state, some controls are given appropriate styling classes. For example, an active filter and so on. Examples are available in the markup directory.
+
+The “My List” button (the button to add a movie to the list to watch) displays the number of movies added to the “to watch” list. Adding a film to watch, or removing a film from the “to watch” list, leads to an immediate recalculation of the number of films. Similar functionality is provided on the “My List” page.
