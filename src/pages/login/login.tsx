@@ -1,50 +1,122 @@
-import {useRef, FormEvent} from 'react';
+import cn from 'classnames';
+import { toast } from 'react-toastify';
+import {FormEvent, useState, ChangeEvent} from 'react';
 import {useAppDispatch} from '../../hooks';
 // components
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import {loginUser} from '../../store/thunks/user';
+import {AuthData} from '../../types/auth-data';
+
+const ERROR_MESSAGES = {
+  LOGIN_IS_EMPTY: 'поле не может быть пустым',
+  WRONG_EMAIL_VALUE: 'введен некорректный эмейл',
+  WRONG_PASSWORD_VALUE: 'пароль должен содержать буквы и цифры',
+};
+
+const isNotEmpty = (value: string) => value.trim() !== '';
+const isEmail = (value: string) => value.includes('@');
+const isValidPassword = (value: string) => {
+  const hasDigit = /\d/.test(value);
+  const hasLetter = /[a-zA-Zа-яА-Я]/.test(value);
+  return value.length > 0 && hasDigit && hasLetter;
+};
+
+const validationRules = {
+  notEmpty: (value: AuthData) => isNotEmpty(value.email) && isNotEmpty(value.password),
+  validEmail: (value: AuthData) => isEmail(value.email),
+  validPassword: (value: AuthData) => isValidPassword(value.password),
+};
+
+type ValidationRulesKeys = keyof typeof validationRules;
 
 export default function Login() {
-  const emailRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({});
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: '',
+  });
   const dispatch = useAppDispatch();
+
+  const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = evt.target;
+    setLoginData((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const onSubmit = (userData: AuthData) => {
+    dispatch(loginUser(userData));
+  };
+
+  const showErrorMessage = (userData: AuthData) => {
+    const errors: { [key: string]: string } = {};
+    if (!isNotEmpty(userData.email)) {
+      errors['email'] = ERROR_MESSAGES.LOGIN_IS_EMPTY;
+      toast.warn(ERROR_MESSAGES.LOGIN_IS_EMPTY);
+    }
+    if (!isEmail(userData.email)) {
+      errors['email'] = ERROR_MESSAGES.WRONG_EMAIL_VALUE;
+      toast.warn(ERROR_MESSAGES.WRONG_EMAIL_VALUE);
+    }
+    if (!isEmail(userData.password)) {
+      errors['password'] = ERROR_MESSAGES.WRONG_PASSWORD_VALUE;
+      toast.warn(ERROR_MESSAGES.WRONG_PASSWORD_VALUE);
+    }
+    setErrorMessage(errors);
+  };
+
+  const isValid = Object.keys(validationRules).every((rule) =>
+    validationRules[rule as ValidationRulesKeys](loginData));
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (emailRef.current !== null && passwordRef.current !== null) {
-      dispatch(loginUser({
-        email: emailRef.current?.value,
-        password: passwordRef.current?.value
-      }));
+    if (!isValid) {
+      showErrorMessage(loginData);
+      return;
     }
+
+    onSubmit(loginData);
   };
+
   return (
     <div className="user-page">
       <Header extraClass="user-page__head" title="Sign In" hideSignIn/>
       <div className="sign-in user-page__content">
         <form action="#" method="post" className="sign-in__form" onSubmit={handleSubmit}>
+          {!isValid &&
+            Object.values(errorMessage).map((message) => (
+              <div className="sign-in__message" key={message}>
+                <p>{message}</p>
+              </div>
+            ))}
           <div className="sign-in__fields">
-            <div className="sign-in__field">
+            <div className={cn('sign-in__field', {
+              'sign-in__field--error': errorMessage['email'],
+            })}
+            >
               <input
-                ref={emailRef}
                 className="sign-in__input"
                 type="email"
+                onChange={handleInputChange}
+                value={loginData.email}
                 placeholder="Email address"
-                name="user-email"
-                id="user-email"
+                name="email"
+                id="email"
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
-            <div className="sign-in__field">
+            <div className={cn('sign-in__field', {
+              'sign-in__field--error': errorMessage['password'],
+            })}
+            >
               <input
-                ref={passwordRef}
                 className="sign-in__input"
                 type="password"
+                onChange={handleInputChange}
+                value={loginData.password}
                 placeholder="Password"
-                name="user-password"
-                id="user-password"
+                name="password"
+                id="password"
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>
