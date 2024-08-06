@@ -7,28 +7,8 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import {loginUser} from '../../store/thunks/user';
 import {AuthData} from '../../types/auth-data';
-
-const ERROR_MESSAGES = {
-  LOGIN_IS_EMPTY: 'поле не может быть пустым',
-  WRONG_EMAIL_VALUE: 'введен некорректный эмейл',
-  WRONG_PASSWORD_VALUE: 'пароль должен содержать буквы и цифры',
-};
-
-const isNotEmpty = (value: string) => value.trim() !== '';
-const isEmail = (value: string) => value.includes('@');
-const isValidPassword = (value: string) => {
-  const hasDigit = /\d/.test(value);
-  const hasLetter = /[a-zA-Zа-яА-Я]/.test(value);
-  return value.length > 0 && hasDigit && hasLetter;
-};
-
-const validationRules = {
-  notEmpty: (value: AuthData) => isNotEmpty(value.email) && isNotEmpty(value.password),
-  validEmail: (value: AuthData) => isEmail(value.email),
-  validPassword: (value: AuthData) => isValidPassword(value.password),
-};
-
-type ValidationRulesKeys = keyof typeof validationRules;
+import {isNotEmpty, isEmail, isValid} from '../../helpers/validationRules';
+import {ERROR_MESSAGES} from '../../const';
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({});
@@ -64,13 +44,10 @@ export default function Login() {
     setErrorMessage(errors);
   };
 
-  const isValid = Object.keys(validationRules).every((rule) =>
-    validationRules[rule as ValidationRulesKeys](loginData));
-
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (!isValid) {
+    if (!isValid(loginData)) {
       showErrorMessage(loginData);
       return;
     }
