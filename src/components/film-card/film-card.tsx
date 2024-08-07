@@ -1,12 +1,12 @@
 import {MouseEvent} from 'react';
 import {AppRoute} from '../../const';
 import {useNavigate} from 'react-router-dom';
-import {SmallFilmCardType} from '../../types/small-film-card-type';
 import ComponentPlayer from '../component-player/component-player';
 import {useAppDispatch} from '../../hooks';
 import {resetCounter} from '../../store/slices/site-process/site-process';
+import {Film} from '../../types/film';
 
-export default function SmallFilmCard({name, isPlaying, previewImage, posterImage, previewVideoLink, id, onMouseEnter, onMouseLeave}: SmallFilmCardType) {
+export default function FilmCard({name, isPlaying, previewImage, posterImage, previewVideoLink, id, onMouseEnter, onMouseLeave}: Film) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -20,11 +20,11 @@ export default function SmallFilmCard({name, isPlaying, previewImage, posterImag
   };
 
   const handleMouseEnter = () => {
-    onMouseEnter(id);
+    onMouseEnter && onMouseEnter(id);
   };
 
   const handleMouseLeave = () => {
-    onMouseLeave();
+    onMouseLeave && onMouseLeave();
   };
 
   return (

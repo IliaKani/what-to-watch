@@ -4,7 +4,7 @@ import {RequestsStatus} from '../../../const';
 import {NameSpace} from '../../../const';
 import {fetchComments, postComment} from '../../thunks/comments';
 
-export type CommentsData = {
+type CommentsData = {
   comments: Comment[];
   status: RequestsStatus;
   hasError: boolean;

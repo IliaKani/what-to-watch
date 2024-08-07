@@ -18,4 +18,7 @@ export type Film = {
   isFavorite: boolean;
   videoLink: string;
   previewVideoLink: string;
+  isPlaying?: boolean;
+  onMouseEnter?: (id: number) => void;
+  onMouseLeave?: () => void;
 }

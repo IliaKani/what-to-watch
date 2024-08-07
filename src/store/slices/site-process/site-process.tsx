@@ -3,7 +3,7 @@ import {Genres, NameSpace, RequestsStatus} from '../../../const';
 import {Film} from '../../../types/film';
 import {fetchPromoFilm} from '../../thunks/promo';
 
-export type SiteProcessData = {
+type SiteProcessData = {
   activeGenre: string;
   promo: Film | null;
   counter: number;

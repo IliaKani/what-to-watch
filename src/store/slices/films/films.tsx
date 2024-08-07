@@ -4,7 +4,7 @@ import {RequestsStatus} from '../../../const';
 import {NameSpace} from '../../../const';
 import {fetchFilms} from '../../thunks/films';
 
-export type FilmsData = {
+type FilmsData = {
   films: Film[];
   status: RequestsStatus;
   hasError: boolean;

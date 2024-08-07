@@ -4,7 +4,7 @@ import {NameSpace} from '../../../const';
 import {fetchUserStatus, loginUser, logoutUser} from '../../thunks/user';
 import {FetchUser} from '../../../types/fetch-user';
 
-export type UserProcess = {
+type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   user: FetchUser['avatarUrl'] | null;
 };

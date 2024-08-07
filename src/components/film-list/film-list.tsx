@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useAppSelector} from '../../hooks';
 import {Film} from '../../types/film';
 import Spinner from '../spinner/spinner';
-import SmallFilmCard from '../small-film-card/small-film-card';
+import SmallFilmCard from '../film-card/film-card';
 import {PREVIEW_TIMEOUT, RequestsStatus} from '../../const';
 import {getFilmsStatus} from '../../store/slices/films/selectors';
 

@@ -4,7 +4,7 @@ import {RequestsStatus} from '../../../const';
 import {NameSpace} from '../../../const';
 import {fetchSimilarFilms} from '../../thunks/similar';
 
-export type SimilarFilmsData = {
+type SimilarFilmsData = {
   films: Film[];
   status: RequestsStatus;
   hasError: boolean;

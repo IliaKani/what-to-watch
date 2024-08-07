@@ -4,7 +4,7 @@ import {FavoriteStatus, RequestsStatus} from '../../../const';
 import {NameSpace} from '../../../const';
 import {changeFavoriteStatus, fetchFavorite} from '../../thunks/favorite';
 
-export type FavoriteData = {
+type FavoriteData = {
   films: Film[];
   status: RequestsStatus;
   hasError: boolean;
