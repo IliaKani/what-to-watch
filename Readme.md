@@ -200,3 +200,17 @@ To convert video playback time to the required format, the developer can use an 
 Depending on the state, some controls are given appropriate styling classes. For example, an active filter and so on. Examples are available in the markup directory.
 
 The “My List” button (the button to add a movie to the list to watch) displays the number of movies added to the “to watch” list. Adding a film to watch, or removing a film from the “to watch” list, leads to an immediate recalculation of the number of films. Similar functionality is provided on the “My List” page.
+
+## 2. Interaction with the server
+
+All necessary data is downloaded from the server.
+
+The server is available at: https://13.design.htmlacademy.pro/wtw.
+
+Specification for interaction with the server in OpenAPI format - https://13.design.htmlacademy.pro/spec/wtw.
+
+If the server is unavailable, an information message is displayed. The design of the message is at the discretion of the developer.
+
+The server receives data in the form of a JSON object.
+
+Authorization on the server is based on a token. The token is sent with each request in the X-Token header.
