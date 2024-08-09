@@ -25,13 +25,17 @@ export default function ButtonsList({id, hideButton, isFavorite}:ButtonListType)
   };
 
   const handleFavoriteChange = (e: MouseEvent) => {
+
     e.preventDefault();
+
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      return navigate(`${AppRoute.Login}`);
+    }
+
     dispatch(changeFavoriteStatus({id, status: Number(!isFavorite)}))
       .then(() => {
-        if (authorizationStatus === AuthorizationStatus.Auth) {
-          dispatch(updatePromo(id));
-          dispatch(updateFilm(id));
-        }
+        dispatch(updatePromo(id));
+        dispatch(updateFilm(id));
       });
   };
 
