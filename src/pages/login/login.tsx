@@ -2,7 +2,6 @@ import cn from 'classnames';
 import { toast } from 'react-toastify';
 import {FormEvent, useState, ChangeEvent} from 'react';
 import {useAppDispatch} from '../../hooks';
-// components
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import {loginUser} from '../../store/thunks/user';

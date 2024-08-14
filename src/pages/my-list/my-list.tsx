@@ -1,10 +1,7 @@
-// components
 import Footer from '../../components/footer/footer';
 import FilmList from '../../components/film-list/film-list';
 import Header from '../../components/header/header';
-// hooks
 import {useAppSelector} from '../../hooks';
-// const
 import {getFavoriteFilms, getFavoriteFilmsStatus} from '../../store/slices/favorite/selectors';
 import {RequestsStatus} from '../../const';
 import LoadingSpinner from '../../components/loading-spinner/loading-spinner';

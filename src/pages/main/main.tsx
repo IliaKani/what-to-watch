@@ -1,12 +1,9 @@
-// components
 import {useEffect} from 'react';
 import Footer from '../../components/footer/footer';
 import FilmList from '../../components/film-list/film-list';
 import GenreList from '../../components/genre-list/genre-list';
 import ShowMore from '../../components/show-more/show-more';
-// hooks
 import {useAppSelector, useAppDispatch} from '../../hooks';
-// const
 import {CARDS_PER_VIEW, Genres, RequestsStatus} from '../../const';
 import {getFilms} from '../../store/slices/films/selectors';
 import {getActiveGenre, getCounter, getPromoFilm, getPromoFilmStatus} from '../../store/slices/site-process/selectors';
@@ -38,7 +35,7 @@ export default function Main() {
     return <LoadingSpinner />;
   }
 
-  if (!promoFilm) {
+  if (promoFilmStatus === RequestsStatus.Failed) {
     return <PageNotFound />;
   }
 

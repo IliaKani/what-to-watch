@@ -1,10 +1,7 @@
 import {useParams} from 'react-router-dom';
-// components
 import Header from '../../components/header/header';
 import ReviewForm from '../../components/review-form/review-form';
-// pages
 import PageNotFound from '../page-not-found/page-not-found';
-// hooks
 import {useAppSelector} from '../../hooks';
 import {getFilm} from '../../store/slices/film/selectors';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';

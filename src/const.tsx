@@ -39,6 +39,10 @@ export const ERROR_MESSAGES = {
   WRONG_PASSWORD_VALUE: 'пароль должен содержать буквы и цифры',
 };
 
+export const MAX_PROGRESS_COUNT = 100;
+export const SECONDS_IN_HOUR = 3600;
+export const MIN_TIME_LIMIT = 10;
+export const TIMEOUT_LIMIT = 1000;
 export const REVIEW_MAX_LENGTH = 400;
 export const REVIEW_MIN_LENGTH = 50;
 export const MIN_RATING = 0;

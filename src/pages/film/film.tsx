@@ -1,16 +1,13 @@
 import {useEffect, useState} from 'react';
 import {useAppDispatch} from '../../hooks';
 import {useParams} from 'react-router-dom';
-// components
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import ButtonsList from '../../components/buttons-list/buttons-list';
 import FilmList from '../../components/film-list/film-list';
 import Tabs from '../../components/tabs/tabs';
 import ChooseSection from '../../components/choose-section/choose-section';
-// const
 import {MAX_SIMILAR_FILMS, RequestsStatus, TABS} from '../../const';
-// hooks
 import {useAppSelector} from '../../hooks';
 import {fetchSimilarFilms} from '../../store/thunks/similar';
 import {fetchComments} from '../../store/thunks/comments';

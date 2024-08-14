@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import {FullScreen, Play, Pause} from '../icons/icons';
 import {formatDuration} from '../../helpers/formatDuration';
 import {sec2Min} from '../../helpers/sec2Min';
+import {MAX_PROGRESS_COUNT, TIMEOUT_LIMIT} from '../../const';
 
 export default function Player({videoLink, posterImage, name}: Film) {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -62,7 +63,7 @@ export default function Player({videoLink, posterImage, name}: Film) {
     const interval = setInterval(() => {
       const {hour, min, sec } = sec2Min(videoRef.current.currentTime);
       setCurrentTime([hour, min, sec]);
-    }, 1000);
+    }, TIMEOUT_LIMIT);
     return () => clearInterval(interval);
   }, [isPlaying]);
 
@@ -91,7 +92,7 @@ export default function Player({videoLink, posterImage, name}: Film) {
             <progress
               className="player__progress"
               value={progress}
-              max={100}
+              max={MAX_PROGRESS_COUNT}
             />
             <div className="player__toggler" style={{left: `${progress}%`}}>Toggler</div>
           </div>

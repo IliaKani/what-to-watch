@@ -1,8 +1,4 @@
-type TimeFormat = {
-  hour: number;
-  min: number;
-  sec: number;
-}
+import {TimeFormat} from '../types/time-format';
 
 export const sec2Min = (sec: number): TimeFormat => {
   const hour = Math.floor(sec / 3600);
