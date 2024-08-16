@@ -5,6 +5,7 @@ import PageNotFound from '../page-not-found/page-not-found';
 import {useAppSelector} from '../../hooks';
 import {getFilm} from '../../store/slices/film/selectors';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
+import HelmetComponent from '../../components/helmet-component/helmet-component';
 
 export default function AddReview() {
   const {id} = useParams();
@@ -24,6 +25,7 @@ export default function AddReview() {
 
   return (
     <section className="film-card film-card--full">
+      <HelmetComponent title='wtw: Add review' description='Add your review'/>
       <div className="film-card__header">
         <div className="film-card__bg">
           <img src={previewImage} alt={name} />

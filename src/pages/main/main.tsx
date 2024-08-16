@@ -11,6 +11,7 @@ import LoadingSpinner from '../../components/loading-spinner/loading-spinner';
 import Promo from '../../components/promo/promo';
 import {fetchPromoFilm} from '../../store/thunks/promo';
 import PageNotFound from '../page-not-found/page-not-found';
+import HelmetComponent from '../../components/helmet-component/helmet-component';
 
 
 export default function Main() {
@@ -47,6 +48,7 @@ export default function Main() {
       }
       <div className="page-content">
         <section className="catalog">
+          <HelmetComponent title='what to watch' description='What to watch - Main page'/>
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenreList />
           <FilmList films={filteredFilms} />

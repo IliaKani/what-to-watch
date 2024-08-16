@@ -17,6 +17,7 @@ import {getSimilar} from '../../store/slices/similar/selectors';
 import {getComments} from '../../store/slices/comments/selectors';
 import PageNotFound from '../page-not-found/page-not-found';
 import LoadingSpinner from '../../components/loading-spinner/loading-spinner';
+import HelmetComponent from '../../components/helmet-component/helmet-component';
 
 export default function Film() {
   const {id} = useParams();
@@ -73,6 +74,7 @@ export default function Film() {
             <img src={previewImage} alt={name}/>
           </div>
 
+          <HelmetComponent title='what to watch' description='What to watch - Watch your film'/>
           <h1 className="visually-hidden">WTW</h1>
 
           <Header extraClass="film-card__head" />

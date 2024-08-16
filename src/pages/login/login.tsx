@@ -8,6 +8,7 @@ import {loginUser} from '../../store/thunks/user';
 import {AuthData} from '../../types/auth-data';
 import {isNotEmpty, isEmail, isValid} from '../../helpers/validationRules';
 import {ERROR_MESSAGES} from '../../const';
+import HelmetComponent from '../../components/helmet-component/helmet-component';
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({});
@@ -56,10 +57,14 @@ export default function Login() {
 
   return (
     <div className="user-page">
+      <HelmetComponent
+        title='wtw: authorization'
+        description='This page is the authentication gateway, allowing users to log in and access the features.'
+      />
       <Header extraClass="user-page__head" title="Sign In" hideSignIn/>
       <div className="sign-in user-page__content">
         <form action="#" method="post" className="sign-in__form" onSubmit={handleSubmit}>
-          {!isValid &&
+          {!isValid(loginData) &&
             Object.values(errorMessage).map((message) => (
               <div className="sign-in__message" key={message}>
                 <p>{message}</p>

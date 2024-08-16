@@ -1,4 +1,5 @@
 import React from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { Provider } from 'react-redux';
@@ -12,9 +13,11 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ToastContainer/>
-      <App />
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <ToastContainer/>
+        <App />
+      </Provider>
+    </HelmetProvider>
   </React.StrictMode>,
 );

@@ -8,6 +8,7 @@ import {getFilm, getFilmStatus} from '../../store/slices/film/selectors';
 import {fetchFilm} from '../../store/thunks/film';
 import {RequestsStatus} from '../../const';
 import LoadingSpinner from '../../components/loading-spinner/loading-spinner';
+import HelmetComponent from '../../components/helmet-component/helmet-component';
 
 export default function Player() {
   const {id} = useParams();
@@ -33,7 +34,13 @@ export default function Player() {
 
   return (
     currentFilm && (
-      <VideoPlayer {...currentFilm}/>
+      <>
+        <HelmetComponent
+          title='wtw: player'
+          description="This player page."
+        />
+        <VideoPlayer {...currentFilm}/>
+      </>
     )
   );
 }
