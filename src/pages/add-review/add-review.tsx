@@ -1,46 +1,87 @@
-import {useParams} from 'react-router-dom';
-import Header from '../../components/header/header';
-import ReviewForm from '../../components/review-form/review-form';
-import PageNotFound from '../page-not-found/page-not-found';
-import {useAppSelector} from '../../hooks';
-import {getFilm} from '../../store/slices/film/selectors';
-import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
-import HelmetComponent from '../../components/helmet-component/helmet-component';
+import { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getFilm, getFilmFetchingStatus } from '../../store/films-data/films-data-selectors';
+import { fetchFilmAction } from '../../store/api-actions';
+import { Logo } from '../../components/logo/logo';
+import { UserHeaderAuth } from '../../components/user-header/user-header-auth';
+import { ReviewForm } from '../../components/review-form/review-form';
+import { PageNotFound } from '../page-not-found/page-not-found';
+import { Loader } from '../../components/loader/loader';
+import { AppRoute, LOGO_HEADER, RequestStatus } from '../../const';
+import { Helmet } from 'react-helmet-async';
 
-export default function AddReview() {
-  const {id} = useParams();
-  const currentFilm = useAppSelector(getFilm);
+export function AddReview(): JSX.Element {
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
 
-  if (!currentFilm) {
-    return (
-      <PageNotFound />
-    );
+  const film = useAppSelector(getFilm);
+  const filmFetchingStatus = useAppSelector(getFilmFetchingStatus);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchFilmAction(id));
+    }
+  }, [id, dispatch]);
+
+  if (filmFetchingStatus === RequestStatus.Pending || !film) {
+    return <Loader />;
   }
 
-  const {
-    name,
-    posterImage,
-    previewImage,
-  } = currentFilm;
+  if (!id) {
+    return <PageNotFound />;
+  }
 
   return (
-    <section className="film-card film-card--full">
-      <HelmetComponent title='wtw: Add review' description='Add your review'/>
-      <div className="film-card__header">
-        <div className="film-card__bg">
-          <img src={previewImage} alt={name} />
-        </div>
-        <h1 className="visually-hidden">WTW</h1>
-        <Header>
-          <Breadcrumbs {...currentFilm} />
-        </Header>
-        <div className="film-card__poster film-card__poster--small">
-          <img src={posterImage} alt={name} width={218} height={327} />
-        </div>
-      </div>
-      <div className="add-review">
-        <ReviewForm id={Number(id)}/>
-      </div>
-    </section>
+    <>
+      <Helmet>
+        <title>What to Watch. Add review</title>
+      </Helmet>
+      {film ? (
+        <section
+          className="film-card film-card--full"
+          style={{ backgroundColor: film.backgroundColor }}
+        >
+          <div className="film-card__header">
+            <div className="film-card__bg">
+              <img src={film.backgroundImage} alt="The Grand Budapest Hotel" />
+            </div>
+            <h1 className="visually-hidden">WTW</h1>
+            <header className="page-header">
+              <Logo logoClass={LOGO_HEADER} />
+              <nav className="breadcrumbs">
+                <ul className="breadcrumbs__list">
+                  <li className="breadcrumbs__item">
+                    <Link
+                      to={`${AppRoute.Film}/${id}`}
+                      className="breadcrumbs__link"
+                    >
+                      {film.name}
+                    </Link>
+                  </li>
+                  <li className="breadcrumbs__item">
+                    <Link to="#" className="breadcrumbs__link">
+                      Add review
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
+              <UserHeaderAuth />
+            </header>
+            <div className="film-card__poster film-card__poster--small">
+              <img
+                src={film.posterImage}
+                alt={film.name}
+                width={218}
+                height={327}
+              />
+            </div>
+          </div>
+          <ReviewForm id={film.id} backgroundColor={film.backgroundColor} />
+        </section>
+      ) : (
+        ''
+      )}
+    </>
   );
 }
