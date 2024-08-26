@@ -1,113 +1,37 @@
-import cn from 'classnames';
-import { toast } from 'react-toastify';
-import {FormEvent, useState, ChangeEvent} from 'react';
-import {useAppDispatch} from '../../hooks';
-import Footer from '../../components/footer/footer';
-import Header from '../../components/header/header';
-import {loginUser} from '../../store/thunks/user';
-import {AuthData} from '../../types/auth-data';
-import {isNotEmpty, isEmail, isValid} from '../../helpers/validationRules';
-import {ERROR_MESSAGES} from '../../const';
-import HelmetComponent from '../../components/helmet-component/helmet-component';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { Logo } from '../../components/logo/logo';
+import { Footer } from '../../components/footer/footer';
+import { LoginForm } from '../../components/login-form/login-form';
+import { AppRoute, AuthorizationStatus, LOGO_HEADER } from '../../const';
 
-export default function Login() {
-  const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({});
-  const [loginData, setLoginData] = useState({
-    email: '',
-    password: '',
-  });
-  const dispatch = useAppDispatch();
+type TLoginProps = {
+  authorizationStatus: AuthorizationStatus;
+};
 
-  const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = evt.target;
-    setLoginData((prevState) => ({ ...prevState, [name]: value }));
-  };
+export function Login({ authorizationStatus }: TLoginProps): JSX.Element {
+  const navigate = useNavigate();
 
-  const onSubmit = (userData: AuthData) => {
-    dispatch(loginUser(userData));
-  };
-
-  const showErrorMessage = (userData: AuthData) => {
-    const errors: { [key: string]: string } = {};
-    if (!isNotEmpty(userData.email)) {
-      errors['email'] = ERROR_MESSAGES.LOGIN_IS_EMPTY;
-      toast.warn(ERROR_MESSAGES.LOGIN_IS_EMPTY);
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Root);
     }
-    if (!isEmail(userData.email)) {
-      errors['email'] = ERROR_MESSAGES.WRONG_EMAIL_VALUE;
-      toast.warn(ERROR_MESSAGES.WRONG_EMAIL_VALUE);
-    }
-    if (!isEmail(userData.password)) {
-      errors['password'] = ERROR_MESSAGES.WRONG_PASSWORD_VALUE;
-      toast.warn(ERROR_MESSAGES.WRONG_PASSWORD_VALUE);
-    }
-    setErrorMessage(errors);
-  };
-
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-
-    if (!isValid(loginData)) {
-      showErrorMessage(loginData);
-      return;
-    }
-
-    onSubmit(loginData);
-  };
+  }, [authorizationStatus, navigate]);
 
   return (
-    <div className="user-page">
-      <HelmetComponent
-        title='wtw: authorization'
-        description='This page is the authentication gateway, allowing users to log in and access the features.'
-      />
-      <Header extraClass="user-page__head" title="Sign In" hideSignIn/>
-      <div className="sign-in user-page__content">
-        <form action="#" method="post" className="sign-in__form" onSubmit={handleSubmit}>
-          {!isValid(loginData) &&
-            Object.values(errorMessage).map((message) => (
-              <div className="sign-in__message" key={message}>
-                <p>{message}</p>
-              </div>
-            ))}
-          <div className="sign-in__fields">
-            <div className={cn('sign-in__field', {
-              'sign-in__field--error': errorMessage['email'],
-            })}
-            >
-              <input
-                className="sign-in__input"
-                type="email"
-                onChange={handleInputChange}
-                value={loginData.email}
-                placeholder="Email address"
-                name="email"
-                id="email"
-              />
-              <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
-            </div>
-            <div className={cn('sign-in__field', {
-              'sign-in__field--error': errorMessage['password'],
-            })}
-            >
-              <input
-                className="sign-in__input"
-                type="password"
-                onChange={handleInputChange}
-                value={loginData.password}
-                placeholder="Password"
-                name="password"
-                id="password"
-              />
-              <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
-            </div>
-          </div>
-          <div className="sign-in__submit">
-            <button className="sign-in__btn" type="submit">Sign in</button>
-          </div>
-        </form>
+    <>
+      <Helmet>
+        <title>What to Watch. Login</title>
+      </Helmet>
+      <div className="user-page">
+        <header className="page-header user-page__head">
+          <Logo logoClass={LOGO_HEADER}/>
+          <h1 className="page-title user-page__title">Sign in</h1>
+        </header>
+        <LoginForm/>
+        <Footer/>
       </div>
-      <Footer/>
-    </div>
+    </>
   );
 }
