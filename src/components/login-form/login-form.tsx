@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import classNames from 'classnames';
-import { useAppDispatch, useAppSelector } from '../../hooks/index.ts';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { getLoginFetchingStatus } from '../../store/user-process/user-process.selectors';
 import { TAuthData } from '../../types/auth-data';
