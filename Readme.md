@@ -17,7 +17,7 @@
 
 ## Documentation
 
-For more detailed information about the application and its functionality, please refer to the [full documentation](https://github.com/IliaKani/what-to-watch/Documentation.md).
+For more detailed information about the application and its functionality, please refer to the [full documentation](https://github.com/IliaKani/what-to-watch/blob/master/Documentation.md).
 
 ## License
 
