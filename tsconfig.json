@@ -21,7 +21,7 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
   },
-  "include": ["src"],
+  "include": ["src", "global.d.ts"],
   "exclude": ["vite.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
