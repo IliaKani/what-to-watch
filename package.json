@@ -1,8 +1,8 @@
 {
   "name": "what-to-watch",
-  "author": "Ilia Kanishchev",
-  "description": "what-to-watch",
-  "homepage": "https://IliaKani.github.io/what-to-watch",
+  "author": "IliaKani",
+  "description": "What to watch",
+  "homepage": "https://iliakani.github.io/what-to-watch/",
   "repository": "https://github.com/IliaKani/what-to-watch",
   "private": true,
   "type": "module",
@@ -50,7 +50,7 @@
     "faker": "5.5.3",
     "gh-pages": "^6.1.1",
     "jsdom": "22.1.0",
-    "typescript": "^5.5.4",
+    "typescript": "5.0.4",
     "vite": "4.3.9",
     "vitest": "0.32.2"
   },

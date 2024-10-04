@@ -7,7 +7,7 @@ export function Footer(): JSX.Element {
       <Logo logoClass={LOGO_FOOTER}/>
 
       <div className="copyright">
-        <p>© 2024 What to watch Ltd.</p>
+        <p>© 2023 What to watch Ltd.</p>
       </div>
     </footer>
   );

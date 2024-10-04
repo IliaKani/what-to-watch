@@ -1,6 +1,7 @@
 import axios, {
   AxiosError,
   AxiosInstance,
+  AxiosRequestConfig,
   AxiosResponse,
 } from 'axios';
 import { getToken } from './token';
@@ -30,13 +31,13 @@ export const createAPI = (): AxiosInstance => {
     timeout: REQUEST_TIMEOUT,
   });
 
-  api.interceptors.request.use((config) => {
+  api.interceptors.request.use((config: AxiosRequestConfig) => {
     const token = getToken();
-  
+
     if (token && config.headers) {
       config.headers['x-token'] = token;
     }
-  
+
     return config;
   });
 
