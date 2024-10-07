@@ -15,6 +15,10 @@
 3. To run the tests: `npm run test`
 4. To deploy the project: `npm run deploy`
 
+## Live Demo
+
+The application is deployed at: [what-to-watch-iliakani.vercel.app](https://what-to-watch-iliakani.vercel.app)
+
 ## Documentation
 
 For more detailed information about the application and its functionality, please refer to the [full documentation](https://github.com/IliaKani/what-to-watch/blob/master/Documentation.md).
